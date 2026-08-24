@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-text-primary font-sans antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold text-text-primary;
+    letter-spacing: -0.02em;
+  }
+  
+  /* Material symbols configuration */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  
+  .material-symbols-outlined.filled {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border-subtle rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-border-strong;
+  }
+}
+
+@layer components {
+  /* Premium button variants with micro-interactions */
+  .btn-primary {
+    @apply bg-primary text-text-inverse px-6 py-3 rounded-lg font-medium transition-all duration-200;
+    @apply hover:bg-primary-hover hover:shadow-elevated hover:-translate-y-0.5;
+    @apply active:translate-y-0 active:shadow-subtle;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-text-inverse px-6 py-3 rounded-lg font-medium transition-all duration-200;
+    @apply hover:bg-secondary-hover hover:shadow-elevated hover:-translate-y-0.5;
+    @apply active:translate-y-0 active:shadow-subtle;
+  }
+  
+  .btn-tertiary {
+    @apply bg-tertiary text-text-inverse px-6 py-3 rounded-lg font-medium transition-all duration-200;
+    @apply hover:bg-tertiary-hover hover:shadow-elevated hover:-translate-y-0.5;
+    @apply active:translate-y-0 active:shadow-subtle;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent border-2 border-border text-text-primary px-6 py-3 rounded-lg font-medium transition-all duration-200;
+    @apply hover:border-primary hover:text-primary hover:bg-primary-light hover:shadow-subtle;
+    @apply active:translate-y-0;
+  }
+  
+  .btn-ghost {
+    @apply bg-transparent text-text-secondary px-5 py-2.5 rounded-lg font-medium transition-all duration-200;
+    @apply hover:bg-surface-alt hover:text-text-primary;
+  }
+  
+  .btn-sm {
+    @apply px-4 py-2 text-sm rounded-md;
+  }
+  
+  .btn-lg {
+    @apply px-8 py-4 text-lg rounded-xl;
+  }
+  
+  /* Premium card component */
+  .card {
+    @apply bg-surface border border-border rounded-xl shadow-card;
+    @apply transition-all duration-300;
+  }
+  
+  .card:hover {
+    @apply shadow-elevated;
+  }
+  
+  .card-elevated {
+    @apply bg-surface border border-border rounded-xl shadow-floating;
+  }
+  
+  .card-interactive {
+    @apply card cursor-pointer;
+    @apply hover:shadow-floating hover:-translate-y-1;
+    @apply active:translate-y-0 active:shadow-card;
+  }
+  
+  /* Input component with refined focus states */
+  .input {
+    @apply w-full px-4 py-3 border-2 border-border rounded-lg bg-surface text-text-primary placeholder:text-text-tertiary;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary-light;
+  }
+  
+  .input-error {
+    @apply focus:border-error focus:ring-error-light;
+  }
+  
+  /* Badge component */
+  .badge {
+    @apply inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide uppercase;
+  }
+  
+  .badge-primary {
+    @apply bg-primary-light text-primary border border-primary/20;
+  }
+  
+  .badge-secondary {
+    @apply bg-secondary-light text-secondary border border-secondary/20;
+  }
+  
+  .badge-tertiary {
+    @apply bg-tertiary-light text-tertiary border border-tertiary/20;
+  }
+  
+  .badge-error {
+    @apply bg-error-light text-error border border-error/20;
+  }
+  
+  /* Divider */
+  .divider {
+    @apply border-t border-border;
+  }
+  
+  .divider-vertical {
+    @apply border-l border-border;
+  }
+  
+  /* Section container */
+  .section {
+    @apply py-16;
+  }
+  
+  .section-compact {
+    @apply py-8;
+  }
+  
+  .section-spacious {
+    @apply py-24;
+  }
+}
