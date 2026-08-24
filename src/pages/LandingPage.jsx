@@ -134,7 +134,7 @@ const LandingPage = () => {
                   Start Learning
                 </motion.button>
                 <motion.button 
-                  onClick={() => document.getElementById('solution-section').scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => document.getElementById('role-selection').scrollIntoView({ behavior: 'smooth' })}
                   className="btn-outline text-lg px-8 py-4"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
