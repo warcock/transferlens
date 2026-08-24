@@ -233,12 +233,12 @@ const TeacherDashboard = () => {
               <text className="text-sm font-semibold text-text-primary" textAnchor="middle" x="500" y="595">Mastery Baseline</text>
 
               {/* Y Axis Labels */}
-              <text textAnchor="end" x="40" y="565" className="font-medium">0%</text>
-              <text textAnchor="end" x="40" y="425" className="font-medium">25%</text>
-              <text textAnchor="end" x="40" y="305" className="font-semibold text-text-primary">50%</text>
-              <text textAnchor="end" x="40" y="165" className="font-medium">75%</text>
-              <text textAnchor="end" x="40" y="45" className="font-medium">100%</text>
-              <text className="text-sm font-semibold text-text-primary" textAnchor="middle" transform="rotate(-90)" x="-300" y="20">Transfer Application</text>
+              <text textAnchor="end" x="45" y="565" className="font-medium">0%</text>
+              <text textAnchor="end" x="45" y="425" className="font-medium">25%</text>
+              <text textAnchor="end" x="45" y="305" className="font-semibold text-text-primary">50%</text>
+              <text textAnchor="end" x="45" y="165" className="font-medium">75%</text>
+              <text textAnchor="end" x="45" y="45" className="font-medium">100%</text>
+              <text className="text-sm font-semibold text-text-primary" textAnchor="middle" transform="rotate(-90)" x="-300" y="10">Transfer Application</text>
 
               {/* Quadrant Labels */}
               <text className="text-sm font-medium text-text-tertiary" fill="currentColor" textAnchor="middle" x="725" y="70">High Mastery / High Transfer</text>
