@@ -10,7 +10,7 @@ const LandingPage = () => {
 
   const handleRoleSelect = (role) => {
     setRole(role)
-    navigate('/dashboard')
+    navigate(role === 'student' ? '/dashboard/student-dashboard' : '/dashboard/teacher-dashboard')
   }
 
   return (
@@ -35,6 +35,7 @@ const LandingPage = () => {
           
           <div className="flex items-center gap-6">
             <motion.button 
+              onClick={() => document.getElementById('problem-section').scrollIntoView({ behavior: 'smooth' })}
               className="text-text-secondary hover:text-text-primary font-medium transition-colors"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -42,6 +43,7 @@ const LandingPage = () => {
               About
             </motion.button>
             <motion.button 
+              onClick={() => document.getElementById('solution-section').scrollIntoView({ behavior: 'smooth' })}
               className="text-text-secondary hover:text-text-primary font-medium transition-colors"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -49,6 +51,7 @@ const LandingPage = () => {
               Research
             </motion.button>
             <motion.button 
+              onClick={() => document.getElementById('role-selection').scrollIntoView({ behavior: 'smooth' })}
               className="btn-primary"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -123,6 +126,7 @@ const LandingPage = () => {
 
               <div className="flex gap-4 mb-12">
                 <motion.button 
+                  onClick={() => document.getElementById('role-selection').scrollIntoView({ behavior: 'smooth' })}
                   className="btn-primary text-lg px-8 py-4"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -130,6 +134,7 @@ const LandingPage = () => {
                   Start Learning
                 </motion.button>
                 <motion.button 
+                  onClick={() => document.getElementById('solution-section').scrollIntoView({ behavior: 'smooth' })}
                   className="btn-outline text-lg px-8 py-4"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -138,27 +143,6 @@ const LandingPage = () => {
                 </motion.button>
               </div>
 
-              {/* Social proof */}
-              <motion.div 
-                className="flex items-center gap-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-              >
-                <div className="flex -space-x-3">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div 
-                      key={i}
-                      className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary-hover border-2 border-surface flex items-center justify-center text-text-inverse text-xs font-bold"
-                    >
-                      {String.fromCharCode(64 + i)}
-                    </div>
-                  ))}
-                </div>
-                <div className="text-sm text-text-secondary">
-                  <span className="font-semibold text-text-primary">2,400+</span> students learning better
-                </div>
-              </motion.div>
             </motion.div>
 
             {/* Right Visual - Interactive */}
@@ -266,7 +250,7 @@ const LandingPage = () => {
       </section>
 
       {/* Problem Section - Unique layout */}
-      <section className="py-24 bg-surface">
+      <section id="problem-section" className="py-24 bg-surface">
         <div className="max-w-[1400px] mx-auto px-8">
           <motion.div 
             className="text-center mb-16"
@@ -330,7 +314,7 @@ const LandingPage = () => {
       </section>
 
       {/* Solution Section - Asymmetric */}
-      <section className="py-24 bg-background">
+      <section id="solution-section" className="py-24 bg-background">
         <div className="max-w-[1400px] mx-auto px-8">
           <div className="grid grid-cols-12 gap-16 items-center">
             <motion.div 
@@ -421,7 +405,7 @@ const LandingPage = () => {
       </section>
 
       {/* Role Selection CTA */}
-      <section className="py-24 bg-surface">
+      <section id="role-selection" className="py-24 bg-surface">
         <div className="max-w-[1400px] mx-auto px-8">
           <motion.div 
             className="text-center mb-16"
@@ -508,10 +492,10 @@ const LandingPage = () => {
             </div>
             
             <div className="flex items-center gap-8 text-sm text-text-secondary">
-              <a href="#" className="hover:text-text-primary transition-colors">About</a>
-              <a href="#" className="hover:text-text-primary transition-colors">Research</a>
-              <a href="#" className="hover:text-text-primary transition-colors">Contact</a>
-              <a href="#" className="hover:text-text-primary transition-colors">Privacy</a>
+              <button onClick={() => document.getElementById('problem-section').scrollIntoView({ behavior: 'smooth' })} className="hover:text-text-primary transition-colors">About</button>
+              <button onClick={() => document.getElementById('solution-section').scrollIntoView({ behavior: 'smooth' })} className="hover:text-text-primary transition-colors">Research</button>
+              <button className="hover:text-text-primary transition-colors">Contact</button>
+              <button className="hover:text-text-primary transition-colors">Privacy</button>
             </div>
 
             <div className="text-sm text-text-tertiary">

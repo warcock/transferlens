@@ -7,7 +7,7 @@ const AssessmentFamiliar = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
 
   const handleSubmit = () => {
-    navigate('/assessment/near-transfer')
+    navigate('/dashboard/assessment/near-transfer')
   }
 
   const options = [
@@ -151,13 +151,13 @@ const AssessmentFamiliar = () => {
             className="flex justify-between items-center pt-8 border-t border-border"
           >
             <motion.button 
-              onClick={() => navigate('/assessment/intro')}
+              onClick={() => navigate('/dashboard/student-dashboard')}
               className="flex items-center gap-2 text-text-tertiary hover:text-text-primary font-medium transition-colors"
               whileHover={{ x: -4 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="material-symbols-outlined">arrow_back</span>
-              Back to intro
+              Back to dashboard
             </motion.button>
             <motion.button 
               onClick={handleSubmit}

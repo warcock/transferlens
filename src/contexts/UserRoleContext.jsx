@@ -17,7 +17,11 @@ export const UserRoleProvider = ({ children }) => {
   })
 
   useEffect(() => {
-    localStorage.setItem('transferlens_role', role)
+    if (role) {
+      localStorage.setItem('transferlens_role', role)
+    } else {
+      localStorage.removeItem('transferlens_role')
+    }
   }, [role])
 
   const toggleRole = () => {

@@ -129,7 +129,7 @@ const AssessmentIntro = () => {
               </div>
             </div>
             <motion.button 
-              onClick={() => navigate('/assessment/familiar')}
+              onClick={() => navigate('/dashboard/assessment/familiar')}
               className="btn-primary group"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

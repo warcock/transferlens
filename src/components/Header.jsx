@@ -4,16 +4,22 @@ import { motion } from 'framer-motion'
 
 const Header = () => {
   const navigate = useNavigate()
-  const { role, toggleRole } = useUserRole()
+  const { role, toggleRole, setRole } = useUserRole()
 
   const handleToggle = () => {
     toggleRole()
     // Navigate to appropriate dashboard based on new role
     if (role === 'student') {
-      navigate('/teacher-dashboard')
+      navigate('/dashboard/teacher-dashboard')
     } else {
-      navigate('/student-dashboard')
+      navigate('/dashboard/student-dashboard')
     }
+  }
+
+  const handleSignOut = () => {
+    setRole(null)
+    localStorage.removeItem('transferlens_role')
+    navigate('/')
   }
 
   return (
@@ -86,6 +92,7 @@ const Header = () => {
 
         {/* Sign Out */}
         <motion.button 
+          onClick={handleSignOut}
           className="text-text-secondary hover:text-error transition-colors text-sm font-medium"
           whileHover={{ x: -2 }}
           whileTap={{ scale: 0.95 }}

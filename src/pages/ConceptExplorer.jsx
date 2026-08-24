@@ -177,7 +177,7 @@ const ConceptExplorer = () => {
         {/* Interactive Graph Layout */}
         <div 
           ref={containerRef}
-          className="relative h-[500px] bg-gradient-to-br from-surface-alt to-surface rounded-2xl border border-border p-8 overflow-hidden"
+          className="relative h-[600px] bg-gradient-to-br from-surface-alt to-surface rounded-2xl border border-border p-8 overflow-hidden"
         >
           {/* Background decoration */}
           <motion.div 
@@ -247,11 +247,11 @@ const ConceptExplorer = () => {
             {concepts.map((concept, index) => {
               const config = getStatusConfig(concept.status)
               const positions = [
-                { top: '25%', left: '25%' },   // Ratio & Proportion (current)
-                { top: '25%', left: '55%' },   // Linear Relationships (ready)
-                { top: '25%', left: '85%' },   // Functions (locked)
-                { top: '65%', left: '40%' },   // Basic Fractions (mastered)
-                { top: '65%', left: '70%' },   // Variables (mastered)
+                { top: '20%', left: '20%' },   // Ratio & Proportion (current)
+                { top: '20%', left: '50%' },   // Linear Relationships (ready)
+                { top: '20%', left: '80%' },   // Functions (locked)
+                { top: '70%', left: '35%' },   // Basic Fractions (mastered)
+                { top: '70%', left: '65%' },   // Variables (mastered)
               ]
               const pos = positions[index] || { top: '50%', left: '50%' }
               

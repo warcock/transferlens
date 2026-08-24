@@ -8,31 +8,22 @@ const Sidebar = () => {
   const { role } = useUserRole()
 
   const studentNavItems = [
-    { path: '/student-dashboard', icon: 'dashboard', label: 'Dashboard' },
-    { path: '/assessment/intro', icon: 'assignment', label: 'Assessments' },
-    { path: '/transfer-analysis', icon: 'analytics', label: 'Transfer Analysis' },
-    { path: '/concept-explorer', icon: 'account_tree', label: 'Concept Explorer' },
+    { path: '/dashboard/student-dashboard', icon: 'dashboard', label: 'Dashboard' },
+    { path: '/dashboard/assessment/intro', icon: 'assignment', label: 'Take Assessment' },
+    { path: '/dashboard/transfer-analysis', icon: 'analytics', label: 'Transfer Analysis' },
+    { path: '/dashboard/concept-explorer', icon: 'account_tree', label: 'Concept Explorer' },
   ]
 
   const teacherNavItems = [
-    { path: '/teacher-dashboard', icon: 'dashboard', label: 'Dashboard' },
-    { path: '/teacher-analytics', icon: 'insights', label: 'Analytics' },
-    { path: '/concept-explorer', icon: 'account_tree', label: 'Concept Explorer' },
+    { path: '/dashboard/teacher-dashboard', icon: 'dashboard', label: 'Dashboard' },
+    { path: '/dashboard/teacher-analytics', icon: 'insights', label: 'Analytics' },
+    { path: '/dashboard/concept-explorer', icon: 'account_tree', label: 'Concept Explorer' },
   ]
 
   const navItems = role === 'student' ? studentNavItems : teacherNavItems
 
   const isActive = (path) => {
-    if (path === '/student-dashboard') {
-      return location.pathname === '/' || location.pathname === '/student-dashboard'
-    }
-    if (path === '/teacher-dashboard') {
-      return location.pathname === '/teacher-dashboard'
-    }
-    if (path === '/teacher-analytics') {
-      return location.pathname === '/teacher-analytics'
-    }
-    return location.pathname.startsWith(path)
+    return location.pathname === path || location.pathname.startsWith(path + '/')
   }
 
   return (
@@ -82,7 +73,7 @@ const Sidebar = () => {
             transition={{ duration: 0.3 }}
           >
             <motion.button 
-              onClick={() => navigate('/assessment/intro')}
+              onClick={() => navigate('/dashboard/assessment/intro')}
               className="btn-primary w-full flex items-center justify-center gap-2 shadow-elevated"
               whileHover={{ scale: 1.02, boxShadow: '0 8px 24px rgba(15, 23, 42, 0.15)' }}
               whileTap={{ scale: 0.98 }}
@@ -163,6 +154,7 @@ const Sidebar = () => {
           Account
         </motion.div>
         <motion.button 
+          onClick={() => alert('Settings coming soon')}
           className="group flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-alt hover:text-text-primary transition-all rounded-xl text-sm font-medium w-full"
           whileHover={{ x: 4 }}
           whileTap={{ scale: 0.98 }}
@@ -174,6 +166,7 @@ const Sidebar = () => {
           Settings
         </motion.button>
         <motion.button 
+          onClick={() => alert('Profile coming soon')}
           className="group flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-alt hover:text-text-primary transition-all rounded-xl text-sm font-medium w-full"
           whileHover={{ x: 4 }}
           whileTap={{ scale: 0.98 }}

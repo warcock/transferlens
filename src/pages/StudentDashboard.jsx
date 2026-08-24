@@ -81,20 +81,14 @@ const StudentDashboard = () => {
                   <p className="text-base text-text-secondary mb-8 max-w-xl leading-relaxed">
                     Test your ability to apply this concept across different contexts and scenarios. Your mastery is strong, but transfer needs improvement.
                   </p>
-                  <motion.button 
-                    onClick={() => navigate('/assessment/intro')}
-                    className="btn-primary group"
+                  <motion.button
+                    onClick={() => navigate('/dashboard/assessment/familiar')}
+                    className="btn-primary px-6 py-3 rounded-xl font-semibold flex items-center gap-2"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
+                    <span className="material-symbols-outlined">play_arrow</span>
                     Start Assessment
-                    <motion.span 
-                      className="material-symbols-outlined text-lg ml-2"
-                      whileHover={{ x: 4 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      arrow_forward
-                    </motion.span>
                   </motion.button>
                 </div>
                 <motion.div 

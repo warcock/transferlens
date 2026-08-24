@@ -17,6 +17,10 @@ import TeacherAnalytics from './pages/TeacherAnalytics'
 const ProtectedRoute = ({ children, allowedRole }) => {
   const { role } = useUserRole()
   
+  if (!role) {
+    return <Navigate to="/" replace />
+  }
+  
   if (role !== allowedRole) {
     const redirectPath = allowedRole === 'student' ? '/teacher-dashboard' : '/student-dashboard'
     return <Navigate to={redirectPath} replace />
@@ -28,6 +32,9 @@ const ProtectedRoute = ({ children, allowedRole }) => {
 // Role-based Redirect for Root
 const RoleRedirect = () => {
   const { role } = useUserRole()
+  if (!role) {
+    return <Navigate to="/" replace />
+  }
   return <Navigate to={role === 'student' ? '/student-dashboard' : '/teacher-dashboard'} replace />
 }
 
