@@ -152,8 +152,8 @@ const LandingPage = () => {
       {/* Hero Section - Asymmetric composition */}
       <section ref={heroRef} className="min-h-screen flex items-center pt-20 relative">
         {/* Background elements */}
-        <motion.div 
-          className="absolute top-20 right-20 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-primary/5 rounded-full blur-3xl"
+      <motion.div 
+        className="absolute pointer-events-none top-20 right-20 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-primary/5 rounded-full blur-3xl"
           animate={{ 
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3]
@@ -161,7 +161,7 @@ const LandingPage = () => {
           transition={{ duration: 8, repeat: Infinity }}
         />
         <motion.div 
-          className="absolute bottom-20 left-20 w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-secondary/5 rounded-full blur-3xl"
+          className="absolute pointer-events-none bottom-20 left-20 w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-secondary/5 rounded-full blur-3xl"
           animate={{ 
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.4, 0.2]
@@ -178,18 +178,9 @@ const LandingPage = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
             >
-              <motion.div 
-                className="inline-flex items-center gap-2 px-4 py-2 bg-primary-light text-primary rounded-full text-xs font-bold uppercase tracking-wider mb-6"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-              >
-                <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-                EdTech Innovation
-              </motion.div>
               
               <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-text-primary mb-6 leading-tight tracking-tight">
-                Measure What{' '}
+                Measure What{' '} 
                 <motion.span 
                   className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary"
                   initial={{ opacity: 0 }}
