@@ -12,6 +12,9 @@ import AssessmentReasoning from './pages/assessment/AssessmentReasoning'
 import TransferAnalysis from './pages/TransferAnalysis'
 import ConceptExplorer from './pages/ConceptExplorer'
 import TeacherAnalytics from './pages/TeacherAnalytics'
+import BridgeAssessmentBuilder from './pages/teacher/BridgeAssessmentBuilder'
+import MyClasses from './pages/teacher/MyClasses'
+import JoinClass from './pages/student/JoinClass'
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRole }) => {
@@ -52,6 +55,14 @@ function App() {
             element={
               <ProtectedRoute allowedRole="student">
                 <StudentDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="join-class" 
+            element={
+              <ProtectedRoute allowedRole="student">
+                <JoinClass />
               </ProtectedRoute>
             } 
           />
@@ -118,6 +129,22 @@ function App() {
             element={
               <ProtectedRoute allowedRole="teacher">
                 <TeacherAnalytics />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="bridge-assessment-builder" 
+            element={
+              <ProtectedRoute allowedRole="teacher">
+                <BridgeAssessmentBuilder />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="my-classes" 
+            element={
+              <ProtectedRoute allowedRole="teacher">
+                <MyClasses />
               </ProtectedRoute>
             } 
           />

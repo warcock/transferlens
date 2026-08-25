@@ -82,7 +82,7 @@ const StudentDashboard = () => {
                     Test your ability to apply this concept across different contexts and scenarios. Your mastery is strong, but transfer needs improvement.
                   </p>
                   <motion.button
-                    onClick={() => navigate('/dashboard/assessment/familiar')}
+                    onClick={() => navigate('/dashboard/assessment/intro')}
                     className="btn-primary px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold flex items-center gap-2 text-sm md:text-base"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -153,7 +153,7 @@ const StudentDashboard = () => {
           </motion.div>
         </div>
 
-        {/* Right Column - Metrics */}
+        {/* Right Column - Metrics & Recent Work */}
         <div className="col-span-1 lg:col-span-4 flex flex-col gap-6 md:gap-8">
           {/* Mastery Score Card */}
           <motion.div 
@@ -166,7 +166,7 @@ const StudentDashboard = () => {
               <div className="w-8 h-8 md:w-10 md:h-10 bg-secondary/10 rounded-xl flex items-center justify-center">
                 <span className="material-symbols-outlined text-secondary text-lg md:text-xl">school</span>
               </div>
-              <h3 className="text-base md:text-lg font-bold text-text-primary">Mastery Score</h3>
+              <h3 className="text-base md:text-lg font-bold text-text-primary">Mastery</h3>
             </div>
             <div className="text-3xl md:text-5xl font-bold text-secondary mb-2" ref={masteryRef}>
               91%
@@ -185,7 +185,7 @@ const StudentDashboard = () => {
               <div className="w-8 h-8 md:w-10 md:h-10 bg-error/10 rounded-xl flex items-center justify-center">
                 <span className="material-symbols-outlined text-error text-lg md:text-xl">swap_horiz</span>
               </div>
-              <h3 className="text-base md:text-lg font-bold text-text-primary">Transfer Score</h3>
+              <h3 className="text-base md:text-lg font-bold text-text-primary">Transfer</h3>
             </div>
             <div className="text-3xl md:text-5xl font-bold text-error mb-2" ref={transferRef}>
               43%
@@ -211,10 +211,7 @@ const StudentDashboard = () => {
             </div>
             <div className="text-xs md:text-sm text-text-secondary">Bridge this gap</div>
           </motion.div>
-        </div>
 
-        {/* Right Column - Recent Work */}
-        <div className="col-span-1 lg:col-span-12 flex flex-col gap-6 md:gap-8">
           {/* Recent Concepts with refined table */}
           <motion.div 
             initial={{ opacity: 0, x: 30 }}

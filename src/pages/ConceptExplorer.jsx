@@ -1,8 +1,9 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 
 const ConceptExplorer = () => {
   const [dimensions, setDimensions] = useState({})
+  const [selectedConcept, setSelectedConcept] = useState(null)
   const containerRef = useRef(null)
   const cardRefs = useRef({})
 
@@ -39,53 +40,63 @@ const ConceptExplorer = () => {
   const concepts = [
     { 
       id: 1, 
-      name: 'Ratio & Proportion', 
-      mastery: 68, 
-      transfer: 43, 
-      prerequisites: ['Basic Fractions', 'Division'],
-      relatedTo: ['Linear Relationships', 'Scaling'],
-      status: 'current',
-      connections: [4, 5, 2] // IDs of connected concepts
-    },
-    { 
-      id: 2, 
-      name: 'Linear Relationships', 
-      mastery: 72, 
-      transfer: 58, 
-      prerequisites: ['Ratio & Proportion', 'Variables'],
-      relatedTo: ['Functions', 'Graphing'],
-      status: 'ready',
-      connections: [1, 5, 3]
-    },
-    { 
-      id: 3, 
-      name: 'Functions', 
-      mastery: 45, 
-      transfer: 32, 
-      prerequisites: ['Linear Relationships', 'Input-Output'],
-      relatedTo: ['Quadratic Equations', 'Calculus'],
-      status: 'locked',
+      name: 'Ratio', 
+      mastery: 94, 
+      transfer: 76, 
+      prerequisites: [],
+      relatedTo: ['Equivalent Ratios', 'Proportionality'],
+      status: 'mastered',
       connections: [2]
     },
     { 
-      id: 4, 
-      name: 'Basic Fractions', 
-      mastery: 92, 
-      transfer: 85, 
-      prerequisites: [],
-      relatedTo: ['Ratio & Proportion', 'Decimals'],
+      id: 2, 
+      name: 'Equivalent Ratios', 
+      mastery: 91, 
+      transfer: 68, 
+      prerequisites: ['Ratio'],
+      relatedTo: ['Proportionality', 'Unit Rate'],
       status: 'mastered',
-      connections: [1]
+      connections: [1, 3]
+    },
+    { 
+      id: 3, 
+      name: 'Proportionality', 
+      mastery: 91, 
+      transfer: 48, 
+      prerequisites: ['Equivalent Ratios'],
+      relatedTo: ['Unit Rate', 'Scaling'],
+      status: 'current',
+      connections: [2, 4, 5]
+    },
+    { 
+      id: 4, 
+      name: 'Unit Rate', 
+      mastery: 88, 
+      transfer: 62, 
+      prerequisites: ['Proportionality'],
+      relatedTo: ['Real-World Application'],
+      status: 'ready',
+      connections: [3, 6]
     },
     { 
       id: 5, 
-      name: 'Variables', 
-      mastery: 78, 
-      transfer: 65, 
-      prerequisites: ['Basic Arithmetic'],
-      relatedTo: ['Linear Relationships', 'Equations'],
-      status: 'mastered',
-      connections: [1, 2]
+      name: 'Scaling', 
+      mastery: 85, 
+      transfer: 55, 
+      prerequisites: ['Proportionality'],
+      relatedTo: ['Real-World Application'],
+      status: 'ready',
+      connections: [3, 6]
+    },
+    { 
+      id: 6, 
+      name: 'Real-World Application', 
+      mastery: 72, 
+      transfer: 38, 
+      prerequisites: ['Unit Rate', 'Scaling'],
+      relatedTo: [],
+      status: 'ready',
+      connections: [4, 5]
     },
   ]
 
@@ -247,11 +258,12 @@ const ConceptExplorer = () => {
             {concepts.map((concept, index) => {
               const config = getStatusConfig(concept.status)
               const positions = [
-                { top: '25%', left: '25%' },   // Ratio & Proportion (current)
-                { top: '25%', left: '75%' },   // Linear Relationships (ready)
-                { top: '50%', left: '50%' },   // Functions (locked)
-                { top: '75%', left: '25%' },   // Basic Fractions (mastered)
-                { top: '75%', left: '75%' },   // Variables (mastered)
+                { top: '15%', left: '50%' },   // Ratio (mastered)
+                { top: '35%', left: '30%' },   // Equivalent Ratios (mastered)
+                { top: '35%', left: '70%' },   // Proportionality (current)
+                { top: '55%', left: '30%' },   // Unit Rate (ready)
+                { top: '55%', left: '70%' },   // Scaling (ready)
+                { top: '75%', left: '50%' },   // Real-World Application (ready)
               ]
               const pos = positions[index] || { top: '50%', left: '50%' }
               
@@ -260,10 +272,15 @@ const ConceptExplorer = () => {
                   key={concept.id}
                   ref={(el) => cardRefs.current[concept.id] = el}
                   initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1,
+                    filter: selectedConcept && selectedConcept.id !== concept.id ? 'brightness(0.5)' : 'brightness(1)'
+                  }}
                   transition={{ delay: 0.3 + index * 0.1, type: "spring", stiffness: 200 }}
                   whileHover={concept.status !== 'locked' ? { scale: 1.05, y: -8 } : {}}
                   whileTap={concept.status !== 'locked' ? { scale: 0.95 } : {}}
+                  onClick={() => setSelectedConcept(concept)}
                   className={`absolute ${config.bg} ${config.border} border-2 rounded-2xl p-3 md:p-6 w-36 md:w-48 cursor-pointer transition-all shadow-subtle hover:shadow-elevated ${concept.status === 'locked' ? 'opacity-60 cursor-not-allowed' : ''}`}
                   style={{ top: pos.top, left: pos.left, transform: 'translate(-50%, -50%)' }}
                 >
@@ -294,7 +311,7 @@ const ConceptExplorer = () => {
                         className={`h-full rounded-full ${concept.transfer < 50 ? 'bg-error' : 'bg-primary'}`}
                         initial={{ width: 0 }}
                         animate={{ width: `${concept.transfer}%` }}
-                        transition={{ delay: 0.6 + index * 0.1, duration: 0.8 }}
+                        transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
                       />
                     </div>
                   </div>
@@ -304,6 +321,80 @@ const ConceptExplorer = () => {
           </div>
         </div>
       </motion.div>
+
+      {/* Concept Detail Panel */}
+      <AnimatePresence>
+        {selectedConcept && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.3 }}
+            className="card card-elevated p-6 md:p-8"
+          >
+            <div className="flex items-start justify-between mb-6">
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-1">{selectedConcept.name}</h3>
+                <div className="flex items-center gap-2">
+                  <span className={`text-sm font-semibold ${selectedConcept.transfer < 50 ? 'text-error' : 'text-secondary'}`}>
+                    Status: {selectedConcept.transfer < 50 ? 'Transfer Gap' : 'Strong Transfer'}
+                  </span>
+                </div>
+              </div>
+              <motion.button
+                onClick={() => setSelectedConcept(null)}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="w-8 h-8 rounded-lg bg-surface-alt flex items-center justify-center hover:bg-surface transition-colors"
+              >
+                <span className="material-symbols-outlined text-text-tertiary">close</span>
+              </motion.button>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="bg-surface-alt rounded-xl p-4 text-center">
+                <div className="text-3xl font-bold text-secondary">{selectedConcept.mastery}%</div>
+                <div className="text-xs text-text-tertiary uppercase tracking-wider mt-1">Mastery</div>
+              </div>
+              <div className="bg-surface-alt rounded-xl p-4 text-center">
+                <div className="text-3xl font-bold text-primary">{selectedConcept.transfer}%</div>
+                <div className="text-xs text-text-tertiary uppercase tracking-wider mt-1">Transfer</div>
+              </div>
+              <div className="bg-surface-alt rounded-xl p-4 text-center">
+                <div className="text-3xl font-bold text-error">{selectedConcept.mastery - selectedConcept.transfer}</div>
+                <div className="text-xs text-text-tertiary uppercase tracking-wider mt-1">Gap</div>
+              </div>
+              <div className="bg-surface-alt rounded-xl p-4 text-center">
+                <div className="text-3xl font-bold text-text-primary">{selectedConcept.connections.length}</div>
+                <div className="text-xs text-text-tertiary uppercase tracking-wider mt-1">Connections</div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <div className="text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-2">Prerequisites</div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedConcept.prerequisites.length > 0 ? (
+                    selectedConcept.prerequisites.map((prereq, index) => (
+                      <span key={index} className="badge badge-secondary">{prereq}</span>
+                    ))
+                  ) : (
+                    <span className="text-sm text-text-tertiary">None</span>
+                  )}
+                </div>
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-2">Related Concepts</div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedConcept.relatedTo.map((related, index) => (
+                    <span key={index} className="badge badge-primary">{related}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Concept Details with asymmetric layout */}
       <div className="grid grid-cols-12 gap-8">
@@ -317,14 +408,14 @@ const ConceptExplorer = () => {
             <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
               <span className="material-symbols-outlined text-primary text-xl">target</span>
             </div>
-            <h3 className="text-2xl font-bold text-text-primary">Current Focus: Ratio & Proportion</h3>
+            <h3 className="text-2xl font-bold text-text-primary">Current Focus: Proportional Reasoning</h3>
           </div>
           
           <div className="space-y-6">
             <div>
               <div className="text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-3">Prerequisites Mastered</div>
               <div className="flex flex-wrap gap-3">
-                {concepts.find(c => c.id === 1).prerequisites.map((prereq, index) => (
+                {concepts.find(c => c.id === 3).prerequisites.map((prereq, index) => (
                   <motion.span
                     key={index}
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -341,7 +432,7 @@ const ConceptExplorer = () => {
             <div>
               <div className="text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-3">Related Concepts</div>
               <div className="flex flex-wrap gap-3">
-                {concepts.find(c => c.id === 1).relatedTo.map((related, index) => (
+                {concepts.find(c => c.id === 3).relatedTo.map((related, index) => (
                   <motion.span
                     key={index}
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -366,7 +457,7 @@ const ConceptExplorer = () => {
                 <div className="text-sm font-bold text-primary uppercase tracking-wider">Learning Path</div>
               </div>
               <p className="text-base text-text-secondary leading-relaxed">
-                Master Ratio & Proportion → Unlock Linear Relationships → Progress to Functions
+                Master Proportional Reasoning → Unlock Unit Rate & Scaling → Progress to Real-World Application
               </p>
             </motion.div>
           </div>
@@ -387,9 +478,9 @@ const ConceptExplorer = () => {
           
           <div className="space-y-4">
             {[
-              { priority: 'Immediate', color: 'error', icon: 'arrow_forward', text: 'Complete Ratio & Proportion bridge assessment to improve transfer score from 43% to target 70%.' },
+              { priority: 'Immediate', color: 'error', icon: 'arrow_forward', text: 'Complete Proportional Reasoning bridge assessment to improve transfer score from 48% to target 70%.' },
               { priority: 'Practice', color: 'secondary', icon: 'school', text: 'Work on cross-domain problems to strengthen structural mapping skills.' },
-              { priority: 'Review', color: 'primary', icon: 'auto_stories', text: 'Strengthen Basic Fractions foundation to support more complex ratio problems.' }
+              { priority: 'Review', color: 'primary', icon: 'auto_stories', text: 'Strengthen Equivalent Ratios foundation to support more complex proportional problems.' }
             ].map((step, index) => (
               <motion.div
                 key={step.priority}

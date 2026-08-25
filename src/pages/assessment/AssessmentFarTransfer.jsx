@@ -10,6 +10,13 @@ const AssessmentFarTransfer = () => {
     navigate('/dashboard/assessment/reasoning')
   }
 
+  const options = [
+    { id: 'a', text: '6', letter: 'A' },
+    { id: 'b', text: '8', letter: 'B' },
+    { id: 'c', text: '10', letter: 'C' },
+    { id: 'd', text: '12', letter: 'D' }
+  ]
+
   return (
     <div className="w-full flex justify-center items-center bg-background min-h-[calc(100vh-72px)]">
       <motion.div 
@@ -78,7 +85,7 @@ const AssessmentFarTransfer = () => {
           transition={{ delay: 0.3 }}
           className="inline-block px-3 py-1 bg-tertiary-light text-tertiary text-xs md:text-sm font-bold uppercase tracking-wider rounded-md mb-4 md:mb-6"
         >
-          New Context: Bus Logistics
+          Far Transfer: Transportation / Operations
         </motion.div>
 
         {/* Question */}
@@ -95,12 +102,7 @@ const AssessmentFarTransfer = () => {
 
         {/* Answer Options */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-10">
-          {[
-            { id: 'a', text: '8 maintenance crews', letter: 'A' },
-            { id: 'b', text: '10 maintenance crews', letter: 'B' },
-            { id: 'c', text: '12 maintenance crews', letter: 'C' },
-            { id: 'd', text: '9 maintenance crews', letter: 'D' }
-          ].map((option, index) => (
+          {options.map((option, index) => (
             <motion.button
               key={option.id}
               initial={{ opacity: 0, y: 20 }}

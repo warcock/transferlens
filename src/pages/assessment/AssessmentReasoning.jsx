@@ -87,9 +87,9 @@ const AssessmentReasoning = () => {
               <span className="material-symbols-outlined text-primary text-2xl">psychology</span>
             </motion.div>
             <div>
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-text-primary leading-relaxed max-w-3xl">Explain Your Thinking</h2>
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-text-primary leading-relaxed max-w-3xl">Explain Your Reasoning</h2>
               <p className="text-base text-text-secondary leading-relaxed">
-                We're interested in how you approached these problems, not just the answers. What patterns or methods did you notice across the different scenarios?
+                Explain how you recognized the relationship in this problem and why your chosen method applies.
               </p>
             </div>
           </div>
