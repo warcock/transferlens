@@ -22,7 +22,7 @@ const LandingPage = () => {
         transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
         className="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-lg border-b border-border"
       >
-        <div className="max-w-[1400px] mx-auto px-8 py-4 flex justify-between items-center">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
           <motion.div 
             className="flex items-center gap-3"
             whileHover={{ scale: 1.02 }}
@@ -30,13 +30,13 @@ const LandingPage = () => {
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-hover rounded-xl flex items-center justify-center shadow-elevated">
               <span className="material-symbols-outlined text-text-inverse text-2xl">school</span>
             </div>
-            <span className="text-xl font-bold text-text-primary tracking-tight">TransferLens</span>
+            <span className="text-xl font-bold text-text-primary tracking-tight hidden sm:block">TransferLens</span>
           </motion.div>
           
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6">
             <motion.button 
               onClick={() => document.getElementById('problem-section').scrollIntoView({ behavior: 'smooth' })}
-              className="text-text-secondary hover:text-text-primary font-medium transition-colors"
+              className="text-text-secondary hover:text-text-primary font-medium transition-colors text-sm md:text-base hidden md:block"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -44,7 +44,7 @@ const LandingPage = () => {
             </motion.button>
             <motion.button 
               onClick={() => document.getElementById('solution-section').scrollIntoView({ behavior: 'smooth' })}
-              className="text-text-secondary hover:text-text-primary font-medium transition-colors"
+              className="text-text-secondary hover:text-text-primary font-medium transition-colors text-sm md:text-base hidden md:block"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -52,7 +52,7 @@ const LandingPage = () => {
             </motion.button>
             <motion.button 
               onClick={() => document.getElementById('role-selection').scrollIntoView({ behavior: 'smooth' })}
-              className="btn-primary"
+              className="btn-primary text-sm md:text-base px-4 md:px-6 py-2 md:py-3"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -66,7 +66,7 @@ const LandingPage = () => {
       <section className="min-h-screen flex items-center pt-20 relative">
         {/* Background elements */}
         <motion.div 
-          className="absolute top-20 right-20 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl"
+          className="absolute top-20 right-20 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-primary/5 rounded-full blur-3xl"
           animate={{ 
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3]
@@ -74,7 +74,7 @@ const LandingPage = () => {
           transition={{ duration: 8, repeat: Infinity }}
         />
         <motion.div 
-          className="absolute bottom-20 left-20 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-3xl"
+          className="absolute bottom-20 left-20 w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-secondary/5 rounded-full blur-3xl"
           animate={{ 
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.4, 0.2]
@@ -82,11 +82,11 @@ const LandingPage = () => {
           transition={{ duration: 6, repeat: Infinity, delay: 1 }}
         />
 
-        <div className="max-w-[1400px] mx-auto px-8 w-full">
-          <div className="grid grid-cols-12 gap-12 items-center">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
             {/* Left Content */}
             <motion.div 
-              className="col-span-7"
+              className="col-span-1 lg:col-span-7 order-2 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
@@ -101,41 +101,37 @@ const LandingPage = () => {
                 EdTech Innovation
               </motion.div>
               
-              <h1 className="text-6xl font-bold text-text-primary mb-6 leading-tight tracking-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-text-primary mb-6 leading-tight tracking-tight">
                 Measure What{' '}
                 <motion.span 
-                  className="text-primary relative inline-block"
-                  whileHover={{ y: -5 }}
-                  transition={{ duration: 0.2 }}
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
                 >
                   Really
-                  <motion.div 
-                    className="absolute bottom-1 left-0 w-full h-3 bg-primary/20 rounded"
-                    initial={{ width: 0 }}
-                    animate={{ width: '100%' }}
-                    transition={{ delay: 1, duration: 0.8 }}
-                  />
                 </motion.span>
-                {' '}Matters
+                {' '}
+                Matters
               </h1>
               
-              <p className="text-xl text-text-secondary mb-8 max-w-2xl leading-relaxed">
+              <p className="text-base md:text-lg lg:text-xl text-text-secondary mb-6 md:mb-8 max-w-2xl leading-relaxed">
                 Students can memorize formulas but fail to apply them in new contexts. 
                 TransferLens measures the gap between mastery and real-world application.
               </p>
 
-              <div className="flex gap-4 mb-12">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-8 md:mb-12">
                 <motion.button 
                   onClick={() => document.getElementById('role-selection').scrollIntoView({ behavior: 'smooth' })}
-                  className="btn-primary text-lg px-8 py-4"
+                  className="btn-primary text-base md:text-lg px-6 md:px-8 py-3 md:py-4 w-full sm:w-auto"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   Start Learning
                 </motion.button>
                 <motion.button 
-                  onClick={() => document.getElementById('role-selection').scrollIntoView({ behavior: 'smooth' })}
-                  className="btn-outline text-lg px-8 py-4"
+                  onClick={() => document.getElementById('solution-section').scrollIntoView({ behavior: 'smooth' })}
+                  className="btn-outline text-base md:text-lg px-6 md:px-8 py-3 md:py-4 w-full sm:w-auto"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -147,7 +143,7 @@ const LandingPage = () => {
 
             {/* Right Visual - Interactive */}
             <motion.div 
-              className="col-span-5 relative"
+              className="col-span-1 lg:col-span-5 relative order-1 lg:order-2 hidden lg:block"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
@@ -250,16 +246,16 @@ const LandingPage = () => {
       </section>
 
       {/* Problem Section - Unique layout */}
-      <section id="problem-section" className="py-24 bg-surface">
-        <div className="max-w-[1400px] mx-auto px-8">
+      <section id="problem-section" className="py-16 md:py-24 bg-surface">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12 md:mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl font-bold text-text-primary mb-4 tracking-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary mb-4 tracking-tight">
               The Hidden Problem in Education
             </h2>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto">
@@ -267,7 +263,7 @@ const LandingPage = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 icon: 'quiz',
@@ -314,11 +310,11 @@ const LandingPage = () => {
       </section>
 
       {/* Solution Section - Asymmetric */}
-      <section id="solution-section" className="py-24 bg-background">
-        <div className="max-w-[1400px] mx-auto px-8">
-          <div className="grid grid-cols-12 gap-16 items-center">
+      <section id="solution-section" className="py-16 md:py-24 bg-background">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-center">
             <motion.div 
-              className="col-span-5"
+              className="col-span-1 lg:col-span-5 order-2 lg:order-1"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -364,13 +360,13 @@ const LandingPage = () => {
             </motion.div>
 
             <motion.div 
-              className="col-span-7"
+              className="col-span-1 lg:col-span-7 order-1 lg:order-2"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl font-bold text-text-primary mb-6 tracking-tight">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary mb-6 tracking-tight">
                 The TransferLens Solution
               </h2>
               <p className="text-lg text-text-secondary mb-8 leading-relaxed">
@@ -405,16 +401,16 @@ const LandingPage = () => {
       </section>
 
       {/* Role Selection CTA */}
-      <section id="role-selection" className="py-24 bg-surface">
-        <div className="max-w-[1400px] mx-auto px-8">
+      <section id="role-selection" className="py-16 md:py-24 bg-surface">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12 md:mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl font-bold text-text-primary mb-4 tracking-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary mb-4 tracking-tight">
               Start Measuring Real Learning
             </h2>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto">
@@ -422,7 +418,7 @@ const LandingPage = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
             <motion.div
               onMouseEnter={() => setHoveredRole('student')}
               onMouseLeave={() => setHoveredRole(null)}
@@ -481,8 +477,8 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-surface border-t border-border">
-        <div className="max-w-[1400px] mx-auto px-8">
+      <footer className="py-8 md:py-12 bg-surface border-t border-border">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-hover rounded-lg flex items-center justify-center">
@@ -491,7 +487,7 @@ const LandingPage = () => {
               <span className="text-lg font-bold text-text-primary">TransferLens</span>
             </div>
             
-            <div className="flex items-center gap-8 text-sm text-text-secondary">
+            <div className="flex items-center gap-4 md:gap-8 text-sm text-text-secondary flex-wrap justify-center">
               <button onClick={() => document.getElementById('problem-section').scrollIntoView({ behavior: 'smooth' })} className="hover:text-text-primary transition-colors">About</button>
               <button onClick={() => document.getElementById('solution-section').scrollIntoView({ behavior: 'smooth' })} className="hover:text-text-primary transition-colors">Research</button>
               <button className="hover:text-text-primary transition-colors">Contact</button>

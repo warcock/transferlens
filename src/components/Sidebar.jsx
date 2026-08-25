@@ -1,15 +1,27 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useUserRole } from '../contexts/UserRoleContext'
+import { useState } from 'react'
+
+let setMobileOpenFn = null
+
+export const setMobileSidebarOpen = (isOpen) => {
+  if (setMobileOpenFn) {
+    setMobileOpenFn(isOpen)
+  }
+}
 
 const Sidebar = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { role } = useUserRole()
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
+  
+  setMobileOpenFn = setIsMobileOpen
 
   const studentNavItems = [
     { path: '/dashboard/student-dashboard', icon: 'dashboard', label: 'Dashboard' },
-    { path: '/dashboard/assessment/intro', icon: 'assignment', label: 'Take Assessment' },
+    { path: '/dashboard/assessment/familiar', icon: 'assignment', label: 'Take Assessment' },
     { path: '/dashboard/transfer-analysis', icon: 'analytics', label: 'Transfer Analysis' },
     { path: '/dashboard/concept-explorer', icon: 'account_tree', label: 'Concept Explorer' },
   ]
@@ -27,7 +39,21 @@ const Sidebar = () => {
   }
 
   return (
-    <nav className="bg-surface/95 backdrop-blur-xl border-r border-border fixed left-0 top-0 h-full w-[280px] flex flex-col z-20">
+    <>
+      {/* Mobile Overlay */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMobileOpen(false)}
+            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          />
+        )}
+      </AnimatePresence>
+      
+      <nav className={`bg-surface/95 backdrop-blur-xl border-r border-border fixed left-0 top-0 h-full w-[280px] flex flex-col z-50 transition-transform duration-300 lg:translate-x-0 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
       {/* Logo */}
       <div className="flex items-center gap-4 px-8 py-8 border-b border-border">
         <motion.div 
@@ -179,6 +205,7 @@ const Sidebar = () => {
         </motion.button>
       </div>
     </nav>
+    </>
   )
 }
 

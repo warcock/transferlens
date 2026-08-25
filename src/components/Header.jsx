@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useUserRole } from '../contexts/UserRoleContext'
 import { motion } from 'framer-motion'
+import { setMobileSidebarOpen } from './Sidebar'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -23,9 +24,18 @@ const Header = () => {
   }
 
   return (
-    <header className="bg-surface/80 backdrop-blur-lg border-b border-border fixed top-0 right-0 h-[72px] w-[calc(100%-280px)] flex justify-between items-center px-8 z-30">
+    <header className="bg-surface/80 backdrop-blur-lg border-b border-border fixed top-0 right-0 h-[72px] w-[calc(100%-280px)] flex justify-between items-center px-8 z-30 lg:w-[calc(100%-280px)] w-full left-0 lg:left-[280px]">
+      {/* Mobile menu button */}
+      <motion.button
+        onClick={() => setMobileSidebarOpen(true)}
+        className="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-surface-alt hover:bg-surface transition-colors"
+        whileTap={{ scale: 0.95 }}
+      >
+        <span className="material-symbols-outlined text-text-primary">menu</span>
+      </motion.button>
+      
       {/* Left side - Page title could go here */}
-      <div className="flex-1">
+      <div className="flex-1 hidden lg:block">
         <motion.div 
           className="h-8 w-1 bg-gradient-to-b from-primary to-transparent rounded-full"
           initial={{ height: 0 }}

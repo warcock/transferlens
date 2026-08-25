@@ -39,7 +39,7 @@ const TeacherDashboard = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-        className="flex justify-between items-start mb-12"
+        className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-8 md:mb-12"
       >
         <div>
           <motion.div 
@@ -51,10 +51,10 @@ const TeacherDashboard = () => {
             <div className="w-2 h-2 bg-primary rounded-full"></div>
             <span className="text-sm font-semibold text-primary uppercase tracking-widest">Teacher Dashboard</span>
           </motion.div>
-          <h1 className="text-5xl font-bold text-text-primary mb-3 tracking-tight">Class Overview</h1>
-          <div className="flex items-center gap-3 text-text-secondary text-lg">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-text-primary mb-3 tracking-tight">Class Overview</h1>
+          <div className="flex items-center gap-2 md:gap-3 text-text-secondary text-base md:text-lg">
             <motion.span 
-              className="material-symbols-outlined text-2xl"
+              className="material-symbols-outlined text-xl md:text-2xl"
               animate={{ rotate: [0, 5, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -66,14 +66,14 @@ const TeacherDashboard = () => {
             <span>students</span>
           </div>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-3 md:gap-4">
           <motion.button 
-            className="btn-outline flex items-center gap-2"
+            className="btn-outline flex items-center gap-2 text-sm md:text-base px-3 md:px-4 py-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             <motion.span 
-              className="material-symbols-outlined text-lg"
+              className="material-symbols-outlined text-base md:text-lg"
               whileHover={{ y: -2 }}
               transition={{ duration: 0.2 }}
             >
@@ -82,12 +82,12 @@ const TeacherDashboard = () => {
             Export
           </motion.button>
           <motion.button 
-            className="btn-outline flex items-center gap-2"
+            className="btn-outline flex items-center gap-2 text-sm md:text-base px-3 md:px-4 py-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             <motion.span 
-              className="material-symbols-outlined text-lg"
+              className="material-symbols-outlined text-base md:text-lg"
               whileHover={{ rotate: 90 }}
               transition={{ duration: 0.3 }}
             >
@@ -99,18 +99,18 @@ const TeacherDashboard = () => {
       </motion.div>
 
       {/* Metrics Row with refined design */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
         {/* Metric Card 1 */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.6 }}
-          className="card p-6 border-l-4 border-l-primary"
+          className="card p-4 md:p-6 border-l-4 border-l-primary"
         >
-          <div className="text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-2">Students Assessed</div>
-          <div ref={studentsRef} className="text-4xl font-bold text-text-primary flex items-baseline gap-2">
+          <div className="text-xs md:text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-2">Students Assessed</div>
+          <div ref={studentsRef} className="text-2xl md:text-4xl font-bold text-text-primary flex items-baseline gap-2">
             32
-            <span className="text-lg text-text-tertiary font-normal">/ 32</span>
+            <span className="text-sm md:text-lg text-text-tertiary font-normal">/ 32</span>
           </div>
         </motion.div>
 
@@ -119,10 +119,10 @@ const TeacherDashboard = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="card p-6 border-l-4 border-l-secondary"
+          className="card p-4 md:p-6 border-l-4 border-l-secondary"
         >
-          <div className="text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-2">Avg Mastery</div>
-          <div ref={masteryRef} className="text-4xl font-bold text-text-primary mb-3">86%</div>
+          <div className="text-xs md:text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-2">Avg Mastery</div>
+          <div ref={masteryRef} className="text-2xl md:text-4xl font-bold text-text-primary mb-3">86%</div>
           <div className="w-full bg-surface-alt h-2 rounded-full overflow-hidden">
             <motion.div 
               className="bg-secondary h-full rounded-full" 
@@ -138,10 +138,10 @@ const TeacherDashboard = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="card p-6 border-l-4 border-l-primary"
+          className="card p-4 md:p-6 border-l-4 border-l-primary"
         >
-          <div className="text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-2">Avg Transfer</div>
-          <div ref={transferRef} className="text-4xl font-bold text-text-primary mb-3">51%</div>
+          <div className="text-xs md:text-sm font-semibold text-text-tertiary uppercase tracking-wider mb-2">Avg Transfer</div>
+          <div ref={transferRef} className="text-2xl md:text-4xl font-bold text-text-primary mb-3">51%</div>
           <div className="w-full bg-surface-alt h-2 rounded-full overflow-hidden">
             <motion.div 
               className="bg-primary h-full rounded-full" 
@@ -157,11 +157,11 @@ const TeacherDashboard = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="card p-6 border-l-4 border-l-error bg-error-light/30"
+          className="card p-4 md:p-6 border-l-4 border-l-error bg-error-light/30"
         >
-          <div className="text-sm font-semibold text-error uppercase tracking-wider mb-2">Avg Transfer Gap</div>
-          <div ref={gapRef} className="text-4xl font-bold text-error mb-1">35 pts</div>
-          <div className="text-sm text-text-tertiary">86% mastery vs 51% transfer</div>
+          <div className="text-xs md:text-sm font-semibold text-error uppercase tracking-wider mb-2">Avg Transfer Gap</div>
+          <div ref={gapRef} className="text-2xl md:text-4xl font-bold text-error mb-1">35 pts</div>
+          <div className="text-xs md:text-sm text-text-tertiary">86% mastery vs 51% transfer</div>
         </motion.div>
       </div>
 
@@ -173,28 +173,28 @@ const TeacherDashboard = () => {
         className="card card-elevated flex flex-col"
       >
         {/* Canvas Header */}
-        <div className="px-8 py-6 border-b border-border flex justify-between items-center">
+        <div className="px-4 md:px-8 py-4 md:py-6 border-b border-border flex flex-col md:flex-row md:justify-between md:items-start gap-2">
           <div>
-            <h3 className="text-2xl font-bold text-text-primary mb-1">Mastery vs Transfer</h3>
-            <p className="text-sm text-text-tertiary">Student performance distribution</p>
+            <h3 className="text-lg md:text-2xl font-bold text-text-primary mb-1">Mastery vs Transfer</h3>
+            <p className="text-xs md:text-sm text-text-tertiary">Student performance distribution</p>
           </div>
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-4 h-4 rounded-full bg-primary shadow-subtle"></div>
-              <span className="text-sm font-medium text-text-secondary">Typical Performance</span>
+          <div className="flex items-center gap-4 md:gap-6 flex-wrap">
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-primary shadow-subtle"></div>
+              <span className="text-xs md:text-sm font-medium text-text-secondary">Typical Performance</span>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-4 h-4 rounded-full bg-error shadow-subtle"></div>
-              <span className="text-sm font-medium text-error">Risk Area</span>
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-error shadow-subtle"></div>
+              <span className="text-xs md:text-sm font-medium text-error">Risk Area</span>
             </div>
           </div>
         </div>
 
         {/* Visualization + Sidebar */}
-        <div className="flex">
+        <div className="flex flex-col lg:flex-row">
           {/* SVG Scatter Plot Area */}
-          <div className="flex-1 p-8 relative min-h-[640px] border-r border-border bg-gradient-to-br from-surface to-surface-alt">
-            <svg className="w-full h-full text-text-tertiary text-[13px]" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 600">
+          <div className="flex-1 p-4 md:p-8 relative min-h-[400px] md:min-h-[640px] border-r border-border bg-gradient-to-br from-surface to-surface-alt">
+            <svg className="w-full h-full text-text-tertiary text-[11px] md:text-[13px]" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 600">
               {/* Definitions */}
               <defs>
                 <pattern id="grid" width="100" height="60" patternUnits="userSpaceOnUse">
@@ -294,7 +294,7 @@ const TeacherDashboard = () => {
           </div>
 
           {/* Side Panel for Insights with refined design */}
-          <div className="w-[360px] bg-surface-alt border-l border-border p-8 flex flex-col gap-8">
+          <div className="w-full lg:w-[360px] bg-surface-alt border-l border-border p-4 md:p-8 flex flex-col gap-6 md:gap-8">
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -302,37 +302,37 @@ const TeacherDashboard = () => {
             >
               <div className="flex items-center gap-3 mb-4">
                 <motion.div 
-                  className="w-10 h-10 bg-error/10 rounded-lg flex items-center justify-center"
+                  className="w-8 h-8 md:w-10 md:h-10 bg-error/10 rounded-lg flex items-center justify-center"
                   animate={{ 
                     scale: [1, 1.05, 1],
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
-                  <span className="material-symbols-outlined text-error text-xl">assignment_late</span>
+                  <span className="material-symbols-outlined text-error text-lg md:text-xl">assignment_late</span>
                 </motion.div>
-                <h4 className="text-lg font-bold text-text-primary">Students Needing Attention</h4>
+                <h4 className="text-base md:text-lg font-bold text-text-primary">Students Needing Attention</h4>
               </div>
-              <p className="text-sm text-text-secondary mb-6 leading-relaxed">
+              <p className="text-xs md:text-sm text-text-secondary mb-4 md:mb-6 leading-relaxed">
                 <span className="font-semibold text-error">{atRiskStudents.length} students</span> show high mastery but low transfer performance, indicating potential hidden gaps.
               </p>
 
               {/* List of at-risk students */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2 md:gap-3">
                 {atRiskStudents.map((student, index) => (
                   <motion.div
                     key={student.name}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.9 + index * 0.1 }}
-                    className="group flex justify-between items-center p-4 rounded-xl bg-surface border border-border hover:border-error/50 hover:shadow-subtle transition-all cursor-pointer"
+                    className="group flex justify-between items-center p-3 md:p-4 rounded-xl bg-surface border border-border hover:border-error/50 hover:shadow-subtle transition-all cursor-pointer"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-error/10 rounded-lg flex items-center justify-center">
-                        <span className="material-symbols-outlined text-error text-sm">person</span>
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <div className="w-6 h-6 md:w-8 md:h-8 bg-error/10 rounded-lg flex items-center justify-center">
+                        <span className="material-symbols-outlined text-error text-xs md:text-sm">person</span>
                       </div>
-                      <span className="text-sm font-semibold text-text-primary group-hover:text-error transition-colors">{student.name}</span>
+                      <span className="text-xs md:text-sm font-semibold text-text-primary group-hover:text-error transition-colors">{student.name}</span>
                     </div>
-                    <span className="text-sm font-bold text-error">-{student.gap} pt</span>
+                    <span className="text-xs md:text-sm font-bold text-error">-{student.gap} pt</span>
                   </motion.div>
                 ))}
               </div>
@@ -342,15 +342,15 @@ const TeacherDashboard = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
-              className="border-t border-border pt-8"
+              className="border-t border-border pt-4 md:pt-8"
             >
               <motion.button 
-                className="btn-primary w-full flex items-center justify-center gap-2 shadow-elevated"
+                className="btn-primary w-full flex items-center justify-center gap-2 shadow-elevated text-sm md:text-base py-2 md:py-3"
                 whileHover={{ scale: 1.02, boxShadow: '0 8px 24px rgba(15, 23, 42, 0.15)' }}
                 whileTap={{ scale: 0.98 }}
               >
                 <motion.span 
-                  className="material-symbols-outlined text-lg"
+                  className="material-symbols-outlined text-base md:text-lg"
                   whileHover={{ rotate: 180 }}
                   transition={{ duration: 0.5 }}
                 >

@@ -130,7 +130,7 @@ const ConceptExplorer = () => {
   }
 
   return (
-    <div className="max-w-[1400px] mx-auto space-y-8">
+    <div className="max-w-[1400px] mx-auto space-y-6 md:space-y-8">
       {/* Page Header with unique composition */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -146,8 +146,8 @@ const ConceptExplorer = () => {
           <div className="w-2 h-2 bg-primary rounded-full"></div>
           <span className="text-sm font-semibold text-primary uppercase tracking-widest">Knowledge Graph</span>
         </motion.div>
-        <h1 className="text-5xl font-bold text-text-primary mb-3 tracking-tight">Concept Explorer</h1>
-        <p className="text-lg text-text-secondary max-w-2xl leading-relaxed">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-text-primary mb-3 tracking-tight">Concept Explorer</h1>
+        <p className="text-base md:text-lg text-text-secondary max-w-2xl leading-relaxed">
           Interactive visualization showing relationships between mathematical concepts and your learning progress across the curriculum.
         </p>
       </motion.div>
@@ -157,17 +157,17 @@ const ConceptExplorer = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.8 }}
-        className="card card-elevated p-8"
+        className="card card-elevated p-4 md:p-8"
       >
-        <div className="flex justify-between items-center mb-8">
-          <h3 className="text-2xl font-bold text-text-primary">Concept Knowledge Graph</h3>
-          <div className="flex gap-6">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-6 md:mb-8">
+          <h3 className="text-lg md:text-2xl font-bold text-text-primary">Concept Knowledge Graph</h3>
+          <div className="flex flex-wrap gap-3 md:gap-6">
             {['mastered', 'current', 'ready', 'locked'].map((status) => {
               const config = getStatusConfig(status)
               return (
                 <div key={status} className="flex items-center gap-2">
-                  <div className={`w-4 h-4 rounded-lg ${config.bg} ${config.border} border-2`}></div>
-                  <span className="text-sm text-text-tertiary font-medium">{config.label}</span>
+                  <div className={`w-3 h-3 md:w-4 md:h-4 rounded-lg ${config.bg} ${config.border} border-2`}></div>
+                  <span className="text-xs md:text-sm text-text-tertiary font-medium">{config.label}</span>
                 </div>
               )
             })}
@@ -177,7 +177,7 @@ const ConceptExplorer = () => {
         {/* Interactive Graph Layout */}
         <div 
           ref={containerRef}
-          className="relative h-[600px] bg-gradient-to-br from-surface-alt to-surface rounded-2xl border border-border p-8 overflow-hidden"
+          className="relative h-[400px] md:h-[500px] lg:h-[600px] bg-gradient-to-br from-surface-alt to-surface rounded-2xl border border-border p-4 md:p-8 overflow-hidden"
         >
           {/* Background decoration */}
           <motion.div 
@@ -247,11 +247,11 @@ const ConceptExplorer = () => {
             {concepts.map((concept, index) => {
               const config = getStatusConfig(concept.status)
               const positions = [
-                { top: '20%', left: '20%' },   // Ratio & Proportion (current)
-                { top: '20%', left: '50%' },   // Linear Relationships (ready)
-                { top: '20%', left: '80%' },   // Functions (locked)
-                { top: '70%', left: '35%' },   // Basic Fractions (mastered)
-                { top: '70%', left: '65%' },   // Variables (mastered)
+                { top: '25%', left: '25%' },   // Ratio & Proportion (current)
+                { top: '25%', left: '75%' },   // Linear Relationships (ready)
+                { top: '50%', left: '50%' },   // Functions (locked)
+                { top: '75%', left: '25%' },   // Basic Fractions (mastered)
+                { top: '75%', left: '75%' },   // Variables (mastered)
               ]
               const pos = positions[index] || { top: '50%', left: '50%' }
               
@@ -264,14 +264,14 @@ const ConceptExplorer = () => {
                   transition={{ delay: 0.3 + index * 0.1, type: "spring", stiffness: 200 }}
                   whileHover={concept.status !== 'locked' ? { scale: 1.05, y: -8 } : {}}
                   whileTap={concept.status !== 'locked' ? { scale: 0.95 } : {}}
-                  className={`absolute ${config.bg} ${config.border} border-2 rounded-2xl p-6 w-48 cursor-pointer transition-all shadow-subtle hover:shadow-elevated ${concept.status === 'locked' ? 'opacity-60 cursor-not-allowed' : ''}`}
+                  className={`absolute ${config.bg} ${config.border} border-2 rounded-2xl p-3 md:p-6 w-36 md:w-48 cursor-pointer transition-all shadow-subtle hover:shadow-elevated ${concept.status === 'locked' ? 'opacity-60 cursor-not-allowed' : ''}`}
                   style={{ top: pos.top, left: pos.left, transform: 'translate(-50%, -50%)' }}
                 >
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className={`material-symbols-outlined ${config.text}`}>{config.icon}</span>
-                    <span className={`text-xs font-semibold uppercase tracking-wider ${config.text}`}>{config.label}</span>
+                  <div className="flex items-center gap-1 md:gap-2 mb-2 md:mb-3">
+                    <span className={`material-symbols-outlined text-sm md:text-base ${config.text}`}>{config.icon}</span>
+                    <span className={`text-[10px] md:text-xs font-semibold uppercase tracking-wider ${config.text}`}>{config.label}</span>
                   </div>
-                  <div className="text-sm font-bold text-text-primary mb-3 leading-tight">{concept.name}</div>
+                  <div className="text-xs md:text-sm font-bold text-text-primary mb-2 md:mb-3 leading-tight">{concept.name}</div>
                   <div className="space-y-2">
                     <div className="flex justify-between text-xs">
                       <span className="text-text-tertiary">Mastery</span>

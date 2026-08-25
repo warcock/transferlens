@@ -35,7 +35,7 @@ const RoleRedirect = () => {
   if (!role) {
     return <Navigate to="/" replace />
   }
-  return <Navigate to={role === 'student' ? '/student-dashboard' : '/teacher-dashboard'} replace />
+  return <Navigate to={role === 'student' ? '/dashboard/student-dashboard' : '/dashboard/teacher-dashboard'} replace />
 }
 
 function App() {
