@@ -131,8 +131,7 @@ const TeacherDashboard = () => {
           <h2 className="text-xl md:text-2xl font-bold text-text-primary">My Classes</h2>
           <motion.button
             onClick={() => {
-              setComingSoonFeature('Create Class')
-              setShowComingSoon(true)
+              setShowCreateClass(true)
             }}
             className="btn-primary flex items-center gap-2 text-sm md:text-base px-3 md:px-4 py-2"
             whileHover={{ scale: 1.02 }}
