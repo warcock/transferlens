@@ -46,7 +46,7 @@ const StudentDashboard = () => {
           <span className="text-sm font-semibold text-primary uppercase tracking-widest">Student Dashboard</span>
         </motion.div>
         <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-text-primary mb-3 tracking-tight">
-          Welcome back, <span className="text-primary">Narin</span>
+          Welcome back, <span className="text-primary">Mark</span>
         </h1>
         <p className="text-base md:text-lg text-text-secondary max-w-2xl leading-relaxed">
           Continue your learning journey. You're making progress in applying mathematical concepts across different contexts.
