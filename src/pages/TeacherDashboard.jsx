@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { useCounterAnimation } from '../hooks/useAnimation'
 import { useNavigate } from 'react-router-dom'
+import ComingSoonModal from '../components/ComingSoonModal'
 
 const TeacherDashboard = () => {
   const navigate = useNavigate()
@@ -11,6 +12,9 @@ const TeacherDashboard = () => {
   const gapRef = useRef(null)
   const [showCreateClass, setShowCreateClass] = useState(false)
   const [hoveredStudent, setHoveredStudent] = useState(null)
+  const [showComingSoon, setShowComingSoon] = useState(false)
+  const [comingSoonFeature, setComingSoonFeature] = useState('')
+  const [showCreateSuccess, setShowCreateSuccess] = useState(false)
 
   const classes = [
     { id: 1, name: 'M3/2 Mathematics', subject: 'Mathematics', grade: 'M3', section: '2', students: 32, topics: 4, code: 'M3MATH26' },
@@ -80,6 +84,10 @@ const TeacherDashboard = () => {
             className="btn-outline flex items-center gap-2 text-sm md:text-base px-3 md:px-4 py-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              setComingSoonFeature('Export')
+              setShowComingSoon(true)
+            }}
           >
             <motion.span 
               className="material-symbols-outlined text-base md:text-lg"
@@ -88,12 +96,17 @@ const TeacherDashboard = () => {
             >
               download
             </motion.span>
+            
             Export
           </motion.button>
           <motion.button 
             className="btn-outline flex items-center gap-2 text-sm md:text-base px-3 md:px-4 py-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              setComingSoonFeature('Filter')
+              setShowComingSoon(true)
+            }}
           >
             <motion.span 
               className="material-symbols-outlined text-base md:text-lg"
@@ -117,7 +130,10 @@ const TeacherDashboard = () => {
         <div className="flex justify-between items-center mb-4 md:mb-6">
           <h2 className="text-xl md:text-2xl font-bold text-text-primary">My Classes</h2>
           <motion.button
-            onClick={() => setShowCreateClass(true)}
+            onClick={() => {
+              setComingSoonFeature('Create Class')
+              setShowComingSoon(true)
+            }}
             className="btn-primary flex items-center gap-2 text-sm md:text-base px-3 md:px-4 py-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -238,7 +254,10 @@ const TeacherDashboard = () => {
                 Cancel
               </motion.button>
               <motion.button
-                onClick={() => setShowCreateClass(false)}
+                onClick={() => {
+                  setShowCreateClass(false)
+                  setShowCreateSuccess(true)
+                }}
                 className="btn-primary flex-1 text-sm md:text-base px-4 py-3"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -551,6 +570,10 @@ const TeacherDashboard = () => {
               className="border-t border-border pt-4 md:pt-8"
             >
               <motion.button 
+                onClick={() => {
+                  setComingSoonFeature('Generate Intervention Plan')
+                  setShowComingSoon(true)
+                }}
                 className="btn-primary w-full flex items-center justify-center gap-2 shadow-elevated text-sm md:text-base py-2 md:py-3"
                 whileHover={{ scale: 1.02, boxShadow: '0 8px 24px rgba(15, 23, 42, 0.15)' }}
                 whileTap={{ scale: 0.98 }}
@@ -568,6 +591,58 @@ const TeacherDashboard = () => {
           </div>
         </div>
       </motion.div>
+
+      <ComingSoonModal 
+        isOpen={showComingSoon}
+        onClose={() => setShowComingSoon(false)}
+        featureName={comingSoonFeature}
+      />
+
+      {/* Create Success Modal */}
+      {showCreateSuccess && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={() => setShowCreateSuccess(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="card p-6 md:p-8 max-w-md w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
+                <span className="material-symbols-outlined text-secondary text-2xl">check_circle</span>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-text-primary">Class Created</h3>
+            </div>
+
+            <p className="text-sm md:text-base text-text-secondary mb-6 leading-relaxed">
+              Class created successfully! Note: This is a prototype/demo. Changes will not be saved.
+            </p>
+
+            <div className="p-4 bg-surface-alt rounded-xl mb-6">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-text-secondary">Class Code:</span>
+                <span className="font-semibold text-primary">M3MATH26</span>
+              </div>
+            </div>
+
+            <motion.button
+              onClick={() => setShowCreateSuccess(false)}
+              className="btn-primary w-full"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Got it
+            </motion.button>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   )
 }

@@ -31,6 +31,16 @@ const TopicAnalytics = () => {
 
   return (
     <div className="max-w-[1400px] mx-auto">
+      {/* Prototype Disclaimer */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-6 p-4 bg-surface-alt border border-border rounded-xl flex items-center gap-3"
+      >
+        <span className="material-symbols-outlined text-tertiary">info</span>
+        <span className="text-sm text-text-secondary">This is prototype data. Changes will not be saved.</span>
+      </motion.div>
+
       {/* Page Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}

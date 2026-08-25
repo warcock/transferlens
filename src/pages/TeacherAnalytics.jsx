@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useCounterAnimation } from '../hooks/useAnimation'
+import ComingSoonModal from '../components/ComingSoonModal'
 
 const TeacherAnalytics = () => {
   const totalAssessmentsRef = useRef(null)
   const completionRateRef = useRef(null)
   const conceptsRef = useRef(null)
+  const [showComingSoon, setShowComingSoon] = useState(false)
+  const [comingSoonFeature, setComingSoonFeature] = useState('')
 
   useCounterAnimation(totalAssessmentsRef, 156, { duration: 1.5 })
   useCounterAnimation(completionRateRef, 94, { duration: 1.5 })
@@ -161,7 +164,11 @@ const TeacherAnalytics = () => {
             <h3 className="text-base md:text-xl font-bold text-text-primary">Student Performance Trends</h3>
           </div>
           <motion.button 
-            className="text-xs md:text-sm font-semibold text-primary hover:underline flex items-center gap-1"
+            onClick={() => {
+              setComingSoonFeature('View All Students')
+              setShowComingSoon(true)
+            }}
+            className="btn-outline text-sm md:text-base px-3 py-2 flex items-center gap-2"
             whileHover={{ x: 2 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -338,6 +345,12 @@ const TeacherAnalytics = () => {
           </div>
         </motion.div>
       </div>
+
+      <ComingSoonModal 
+        isOpen={showComingSoon}
+        onClose={() => setShowComingSoon(false)}
+        featureName={comingSoonFeature}
+      />
     </div>
   )
 }

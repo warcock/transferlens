@@ -3,15 +3,15 @@ import { motion } from 'framer-motion'
 import { useScrollAnimation, useCounterAnimation } from '../hooks/useAnimation'
 import { useRef, useState } from 'react'
 import LearningProgressChart from '../components/LearningProgressChart'
+import ComingSoonModal from '../components/ComingSoonModal'
 
 const StudentDashboard = () => {
   const navigate = useNavigate()
   const masteryRef = useRef(null)
   const transferRef = useRef(null)
   const gapRef = useRef(null)
-  const [showJoinClass, setShowJoinClass] = useState(false)
-  const [classCode, setClassCode] = useState('')
-  const [joinedClass, setJoinedClass] = useState(null)
+  const [showComingSoon, setShowComingSoon] = useState(false)
+  const [comingSoonFeature, setComingSoonFeature] = useState('')
 
   useCounterAnimation(masteryRef, 91, { duration: 1.5 })
   useCounterAnimation(transferRef, 43, { duration: 1.5 })
@@ -26,14 +26,6 @@ const StudentDashboard = () => {
   const assignedTopics = [
     { id: 1, name: 'Ratio & Proportion', teacher: 'Mr. David', status: 'not-started', dueDate: '2026-09-15' },
   ]
-
-  const handleJoinClass = () => {
-    if (classCode === 'M3MATH26') {
-      setJoinedClass({ name: 'M3/2 Mathematics', code: classCode })
-      setShowJoinClass(false)
-      setClassCode('')
-    }
-  }
 
   return (
     <div className="max-w-[1400px] mx-auto">
@@ -59,16 +51,6 @@ const StudentDashboard = () => {
         <p className="text-base md:text-lg text-text-secondary max-w-2xl leading-relaxed">
           Continue your learning journey. You're making progress in applying mathematical concepts across different contexts.
         </p>
-        {joinedClass && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-4 p-3 bg-secondary-light border border-secondary/30 rounded-xl flex items-center gap-3"
-          >
-            <span className="material-symbols-outlined text-secondary">check_circle</span>
-            <span className="text-sm font-medium text-text-primary">Successfully joined {joinedClass.name}</span>
-          </motion.div>
-        )}
       </motion.div>
 
       {/* Join Class Button */}
@@ -79,7 +61,10 @@ const StudentDashboard = () => {
         className="mb-6 md:mb-8"
       >
         <motion.button
-          onClick={() => setShowJoinClass(true)}
+          onClick={() => {
+            setComingSoonFeature('Join Class')
+            setShowComingSoon(true)
+          }}
           className="btn-outline flex items-center gap-2 text-sm md:text-base px-4 py-2"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
@@ -88,56 +73,6 @@ const StudentDashboard = () => {
           Join Class
         </motion.button>
       </motion.div>
-
-      {/* Join Class Modal */}
-      {showJoinClass && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => setShowJoinClass(false)}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className="card p-6 md:p-8 w-full max-w-md"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-6">Join a Class</h3>
-            <div className="mb-6">
-              <label className="block text-sm font-semibold text-text-primary mb-2">Class Code</label>
-              <input
-                type="text"
-                value={classCode}
-                onChange={(e) => setClassCode(e.target.value.toUpperCase())}
-                placeholder="Enter class code (e.g., M3MATH26)"
-                className="w-full px-4 py-3 rounded-xl border border-border bg-surface focus:border-primary focus:outline-none transition-colors text-sm md:text-base uppercase"
-              />
-              <p className="text-xs text-text-tertiary mt-2">Ask your teacher for the class code</p>
-            </div>
-            <div className="flex gap-3">
-              <motion.button
-                onClick={() => setShowJoinClass(false)}
-                className="btn-outline flex-1 text-sm md:text-base px-4 py-3"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Cancel
-              </motion.button>
-              <motion.button
-                onClick={handleJoinClass}
-                className="btn-primary flex-1 text-sm md:text-base px-4 py-3"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Join Class
-              </motion.button>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
 
       {/* Main Layout with asymmetric grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
@@ -374,6 +309,12 @@ const StudentDashboard = () => {
           </motion.div>
         </div>
       </div>
+
+      <ComingSoonModal 
+        isOpen={showComingSoon}
+        onClose={() => setShowComingSoon(false)}
+        featureName={comingSoonFeature}
+      />
     </div>
   )
 }

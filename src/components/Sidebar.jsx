@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useUserRole } from '../contexts/UserRoleContext'
 import { useState } from 'react'
+import ComingSoonModal from './ComingSoonModal'
 
 let setMobileOpenFn = null
 
@@ -16,6 +17,8 @@ const Sidebar = () => {
   const navigate = useNavigate()
   const { role } = useUserRole()
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [showComingSoon, setShowComingSoon] = useState(false)
+  const [comingSoonFeature, setComingSoonFeature] = useState('')
   
   setMobileOpenFn = setIsMobileOpen
 
@@ -180,7 +183,10 @@ const Sidebar = () => {
           Account
         </motion.div>
         <motion.button 
-          onClick={() => alert('Settings coming soon')}
+          onClick={() => {
+            setComingSoonFeature('Settings')
+            setShowComingSoon(true)
+          }}
           className="group flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-alt hover:text-text-primary transition-all rounded-xl text-sm font-medium w-full"
           whileHover={{ x: 4 }}
           whileTap={{ scale: 0.98 }}
@@ -192,7 +198,10 @@ const Sidebar = () => {
           Settings
         </motion.button>
         <motion.button 
-          onClick={() => alert('Profile coming soon')}
+          onClick={() => {
+            setComingSoonFeature('Profile')
+            setShowComingSoon(true)
+          }}
           className="group flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-alt hover:text-text-primary transition-all rounded-xl text-sm font-medium w-full"
           whileHover={{ x: 4 }}
           whileTap={{ scale: 0.98 }}
@@ -205,6 +214,12 @@ const Sidebar = () => {
         </motion.button>
       </div>
     </nav>
+
+    <ComingSoonModal 
+      isOpen={showComingSoon}
+      onClose={() => setShowComingSoon(false)}
+      featureName={comingSoonFeature}
+    />
     </>
   )
 }

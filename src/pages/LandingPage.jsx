@@ -191,7 +191,7 @@ const LandingPage = () => {
               <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-text-primary mb-6 leading-tight tracking-tight">
                 Measure What{' '}
                 <motion.span 
-                  className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary"
+                  className="text-transparent bg-clip-text bg-gradient-to-t from-primary to-secondary"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}

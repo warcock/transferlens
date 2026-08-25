@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { useCounterAnimation } from '../hooks/useAnimation'
 import { useNavigate } from 'react-router-dom'
+import ComingSoonModal from '../components/ComingSoonModal'
 
 const ClassOverview = () => {
   const navigate = useNavigate()
@@ -10,6 +11,9 @@ const ClassOverview = () => {
   const transferRef = useRef(null)
   const gapRef = useRef(null)
   const [showCreateTopic, setShowCreateTopic] = useState(false)
+  const [showComingSoon, setShowComingSoon] = useState(false)
+  const [comingSoonFeature, setComingSoonFeature] = useState('')
+  const [showCreateSuccess, setShowCreateSuccess] = useState(false)
 
   useCounterAnimation(studentsRef, 32, { duration: 1.5 })
   useCounterAnimation(masteryRef, 86, { duration: 1.5 })
@@ -83,6 +87,10 @@ const ClassOverview = () => {
         </div>
         <div className="flex gap-3">
           <motion.button 
+            onClick={() => {
+              setComingSoonFeature('Manage Students')
+              setShowComingSoon(true)
+            }}
             className="btn-outline flex items-center gap-2 text-sm md:text-base px-3 md:px-4 py-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -308,27 +316,6 @@ const ClassOverview = () => {
                   className="w-full px-4 py-3 rounded-xl border border-border bg-surface focus:border-primary focus:outline-none transition-colors text-sm md:text-base resize-none"
                 />
               </div>
-              <div className="border-t border-border pt-4">
-                <label className="block text-sm font-semibold text-text-primary mb-3">Assessment Configuration</label>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="w-5 h-5 rounded border-border text-primary focus:ring-primary" />
-                    <span className="text-sm text-text-secondary">Familiar Questions</span>
-                  </label>
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="w-5 h-5 rounded border-border text-primary focus:ring-primary" />
-                    <span className="text-sm text-text-secondary">Near Transfer Questions</span>
-                  </label>
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="w-5 h-5 rounded border-border text-primary focus:ring-primary" />
-                    <span className="text-sm text-text-secondary">Far Transfer Questions</span>
-                  </label>
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="w-5 h-5 rounded border-border text-primary focus:ring-primary" />
-                    <span className="text-sm text-text-secondary">Reasoning Question</span>
-                  </label>
-                </div>
-              </div>
               <div className="bg-surface-alt p-4 rounded-xl">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-text-secondary">Estimated Questions:</span>
@@ -350,7 +337,10 @@ const ClassOverview = () => {
                 Cancel
               </motion.button>
               <motion.button
-                onClick={() => setShowCreateTopic(false)}
+                onClick={() => {
+                  setShowCreateTopic(false)
+                  setShowCreateSuccess(true)
+                }}
                 className="btn-primary flex-1 text-sm md:text-base px-4 py-3"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -358,6 +348,51 @@ const ClassOverview = () => {
                 Create Topic
               </motion.button>
             </div>
+          </motion.div>
+        </motion.div>
+      )}
+
+      <ComingSoonModal 
+        isOpen={showComingSoon}
+        onClose={() => setShowComingSoon(false)}
+        featureName={comingSoonFeature}
+      />
+
+      {/* Create Success Modal */}
+      {showCreateSuccess && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={() => setShowCreateSuccess(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="card p-6 md:p-8 max-w-md w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
+                <span className="material-symbols-outlined text-secondary text-2xl">check_circle</span>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-text-primary">Topic Created</h3>
+            </div>
+
+            <p className="text-sm md:text-base text-text-secondary mb-6 leading-relaxed">
+              Topic created successfully! Note: This is a prototype/demo. Changes will not be saved.
+            </p>
+
+            <motion.button
+              onClick={() => setShowCreateSuccess(false)}
+              className="btn-primary w-full"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Got it
+            </motion.button>
           </motion.div>
         </motion.div>
       )}

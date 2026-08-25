@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ComingSoonModal from '../components/ComingSoonModal'
 
 const BridgeAssessmentBuilder = () => {
   const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(0)
   const [showPreview, setShowPreview] = useState(false)
+  const [showPublishSuccess, setShowPublishSuccess] = useState(false)
 
   const assessmentStages = [
     {
@@ -67,15 +69,102 @@ const BridgeAssessmentBuilder = () => {
 
   if (showPreview) {
     return (
+      <>
+        <div className="max-w-[1400px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <motion.button
+                onClick={() => setShowPreview(false)}
+                className="btn-outline flex items-center gap-2 text-sm px-3 py-2"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="material-symbols-outlined">arrow_back</span>
+                Back
+              </motion.button>
+              <div className="w-2 h-2 bg-primary rounded-full"></div>
+              <span className="text-sm font-semibold text-primary uppercase tracking-widest">Assessment Preview</span>
+            </div>
+
+            <div className="card p-6 md:p-8 mb-6">
+              <h1 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">Ratio & Proportion</h1>
+              <p className="text-text-secondary mb-6">6 Questions • 4–5 minutes estimated</p>
+
+              <div className="space-y-3 mb-6">
+                {assessmentStages.map((stage, index) => (
+                  <div key={index} className="flex items-center gap-4 p-4 bg-surface-alt rounded-xl">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                      stage.type === 'FAMILIAR' ? 'bg-secondary text-white' :
+                      stage.type === 'NEAR TRANSFER' ? 'bg-primary text-white' :
+                      stage.type === 'FAR TRANSFER' ? 'bg-tertiary text-white' :
+                      'bg-error text-white'
+                    }`}>
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-text-primary">{stage.type}</div>
+                      <div className="text-xs text-text-tertiary">{stage.transferDistance}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-3">
+                <motion.button
+                  onClick={() => setShowPreview(false)}
+                  className="btn-outline flex-1 text-sm md:text-base px-4 py-3"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Edit
+                </motion.button>
+                <motion.button
+                  onClick={() => {
+                    setShowPreview(false)
+                    setShowPublishSuccess(true)
+                  }}
+                  className="btn-primary flex-1 text-sm md:text-base px-4 py-3"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Publish Assessment
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        <ComingSoonModal 
+          isOpen={showPublishSuccess}
+          onClose={() => {
+            setShowPublishSuccess(false)
+            navigate('/dashboard/class-overview')
+          }}
+          featureName="Publish Assessment"
+        />
+      </>
+    )
+  }
+
+  const currentStage = assessmentStages[currentStep]
+
+  return (
+    <>
       <div className="max-w-[1400px] mx-auto">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="mb-8"
         >
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-4">
             <motion.button
-              onClick={() => setShowPreview(false)}
+              onClick={() => navigate('/dashboard/class-overview')}
               className="btn-outline flex items-center gap-2 text-sm px-3 py-2"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -84,88 +173,13 @@ const BridgeAssessmentBuilder = () => {
               Back
             </motion.button>
             <div className="w-2 h-2 bg-primary rounded-full"></div>
-            <span className="text-sm font-semibold text-primary uppercase tracking-widest">Assessment Preview</span>
+            <span className="text-sm font-semibold text-primary uppercase tracking-widest">Bridge Assessment Builder</span>
           </div>
-
-          <div className="card p-6 md:p-8 mb-6">
-            <h1 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">Ratio & Proportion</h1>
-            <p className="text-text-secondary mb-6">6 Questions • 4–5 minutes estimated</p>
-
-            <div className="space-y-3 mb-6">
-              {assessmentStages.map((stage, index) => (
-                <div key={index} className="flex items-center gap-4 p-4 bg-surface-alt rounded-xl">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                    stage.type === 'FAMILIAR' ? 'bg-secondary text-white' :
-                    stage.type === 'NEAR TRANSFER' ? 'bg-primary text-white' :
-                    stage.type === 'FAR TRANSFER' ? 'bg-tertiary text-white' :
-                    'bg-error text-white'
-                  }`}>
-                    {index + 1}
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-semibold text-text-primary">{stage.type}</div>
-                    <div className="text-xs text-text-tertiary">{stage.transferDistance}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex gap-3">
-              <motion.button
-                onClick={() => setShowPreview(false)}
-                className="btn-outline flex-1 text-sm md:text-base px-4 py-3"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Edit
-              </motion.button>
-              <motion.button
-                onClick={() => {
-                  alert('Assessment published!')
-                  navigate('/dashboard/class-overview')
-                }}
-                className="btn-primary flex-1 text-sm md:text-base px-4 py-3"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Publish Assessment
-              </motion.button>
-            </div>
-          </div>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary mb-3">Create Bridge Assessment</h1>
+          <p className="text-text-secondary max-w-2xl">
+            Create questions that test the same underlying concept across increasingly unfamiliar contexts.
+          </p>
         </motion.div>
-      </div>
-    )
-  }
-
-  const currentStage = assessmentStages[currentStep]
-
-  return (
-    <div className="max-w-[1400px] mx-auto">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="mb-8"
-      >
-        <div className="flex items-center gap-3 mb-4">
-          <motion.button
-            onClick={() => navigate('/dashboard/class-overview')}
-            className="btn-outline flex items-center gap-2 text-sm px-3 py-2"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <span className="material-symbols-outlined">arrow_back</span>
-            Back
-          </motion.button>
-          <div className="w-2 h-2 bg-primary rounded-full"></div>
-          <span className="text-sm font-semibold text-primary uppercase tracking-widest">Bridge Assessment Builder</span>
-        </div>
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary mb-3">Create Bridge Assessment</h1>
-        <p className="text-text-secondary max-w-2xl">
-          Create questions that test the same underlying concept across increasingly unfamiliar contexts.
-        </p>
-      </motion.div>
 
       {/* Progress Indicator */}
       <motion.div
@@ -364,6 +378,16 @@ const BridgeAssessmentBuilder = () => {
         )}
       </motion.div>
     </div>
+
+    <ComingSoonModal 
+      isOpen={showPublishSuccess}
+      onClose={() => {
+        setShowPublishSuccess(false)
+        navigate('/dashboard/class-overview')
+      }}
+      featureName="Publish Assessment"
+    />
+    </>
   )
 }
 
