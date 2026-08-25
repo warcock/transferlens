@@ -4,6 +4,7 @@ import { useScrollAnimation, useCounterAnimation } from '../hooks/useAnimation'
 import { useRef, useState } from 'react'
 import LearningProgressChart from '../components/LearningProgressChart'
 import ComingSoonModal from '../components/ComingSoonModal'
+import JoinClassModal from '../components/JoinClassModal'
 
 const StudentDashboard = () => {
   const navigate = useNavigate()
@@ -12,6 +13,7 @@ const StudentDashboard = () => {
   const gapRef = useRef(null)
   const [showComingSoon, setShowComingSoon] = useState(false)
   const [comingSoonFeature, setComingSoonFeature] = useState('')
+  const [showJoinClass, setShowJoinClass] = useState(false)
 
   useCounterAnimation(masteryRef, 91, { duration: 1.5 })
   useCounterAnimation(transferRef, 43, { duration: 1.5 })
@@ -62,8 +64,7 @@ const StudentDashboard = () => {
       >
         <motion.button
           onClick={() => {
-            setComingSoonFeature('Join Class')
-            setShowComingSoon(true)
+            setShowJoinClass(true)
           }}
           className="btn-outline flex items-center gap-2 text-sm md:text-base px-4 py-2"
           whileHover={{ scale: 1.02 }}
@@ -310,11 +311,19 @@ const StudentDashboard = () => {
         </div>
       </div>
 
-      <ComingSoonModal 
-        isOpen={showComingSoon}
-        onClose={() => setShowComingSoon(false)}
-        featureName={comingSoonFeature}
-      />
+    <JoinClassModal
+      isOpen={showJoinClass}
+      onClose={() => setShowJoinClass(false)}
+      onJoin={(classCode) => {
+        console.log('Joining class:', classCode)
+
+        // Connect this to your backend later.
+        // Example:
+        // navigate(`/dashboard/class/${classCode}`)
+
+        setShowJoinClass(false)
+      }}
+    />
     </div>
   )
 }
