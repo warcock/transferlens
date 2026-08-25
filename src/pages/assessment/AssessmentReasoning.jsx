@@ -87,9 +87,9 @@ const AssessmentReasoning = () => {
               <span className="material-symbols-outlined text-primary text-2xl">psychology</span>
             </motion.div>
             <div>
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-text-primary leading-relaxed max-w-3xl">Explain Your Reasoning</h2>
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-text-primary leading-relaxed max-w-3xl">Explain Your Thinking</h2>
               <p className="text-base text-text-secondary leading-relaxed">
-                Explain how you recognized the relationship in this problem and why your chosen method applies.
+                We're interested in how you approached these problems, not just the answers. What patterns or methods did you notice across the different scenarios?
               </p>
             </div>
           </div>
@@ -108,12 +108,24 @@ const AssessmentReasoning = () => {
           <textarea
             value={reasoning}
             onChange={(e) => setReasoning(e.target.value)}
-            placeholder="Describe your approach to solving these problems. Did you notice any similarities between the recipe, business scaling, and bus logistics scenarios?"
+            placeholder="Explain how you recognized the relationship in this problem and why your chosen method applies."
             className="w-full h-32 md:h-48 p-4 md:p-6 bg-surface-alt border-2 border-border rounded-2xl text-base md:text-lg text-text-primary placeholder:text-text-tertiary focus:border-primary focus:outline-none transition-colors resize-none"
           />
           <p className="text-sm text-text-tertiary mt-2">
             {reasoning.length} / 500 characters
           </p>
+          
+          {/* Optional features */}
+          <div className="mt-4 flex flex-wrap gap-2">
+            <span className="px-3 py-1 bg-surface border border-border rounded-lg text-xs text-text-secondary flex items-center gap-1">
+              <span className="material-symbols-outlined text-sm">mic</span>
+              Voice Response (Coming Soon)
+            </span>
+            <span className="px-3 py-1 bg-surface border border-border rounded-lg text-xs text-text-secondary flex items-center gap-1">
+              <span className="material-symbols-outlined text-sm">upload</span>
+              Upload Written Work (Coming Soon)
+            </span>
+          </div>
         </motion.div>
 
         {/* Navigation */}

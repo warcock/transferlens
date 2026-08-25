@@ -12,9 +12,9 @@ const AssessmentFamiliar = () => {
 
   const options = [
     { id: 'a', text: '4 cups', letter: 'A' },
-    { id: 'b', text: '5 cups', letter: 'B' },
-    { id: 'c', text: '6 cups', letter: 'C' },
-    { id: 'd', text: '8 cups', letter: 'D' }
+    { id: 'b', text: '9 cups', letter: 'B' },
+    { id: 'c', text: '8 cups', letter: 'C' },
+    { id: 'd', text: '6 cups', letter: 'D' }
   ]
 
   return (

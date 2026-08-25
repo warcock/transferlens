@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useScrollAnimation, useCounterAnimation } from '../hooks/useAnimation'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import LearningProgressChart from '../components/LearningProgressChart'
 
 const StudentDashboard = () => {
@@ -9,6 +9,9 @@ const StudentDashboard = () => {
   const masteryRef = useRef(null)
   const transferRef = useRef(null)
   const gapRef = useRef(null)
+  const [showJoinClass, setShowJoinClass] = useState(false)
+  const [classCode, setClassCode] = useState('')
+  const [joinedClass, setJoinedClass] = useState(null)
 
   useCounterAnimation(masteryRef, 91, { duration: 1.5 })
   useCounterAnimation(transferRef, 43, { duration: 1.5 })
@@ -19,6 +22,18 @@ const StudentDashboard = () => {
     { name: 'Linear Relationships', mastery: 84, transfer: 68 },
     { name: 'Force & Motion', mastery: 88, transfer: 51 },
   ]
+
+  const assignedTopics = [
+    { id: 1, name: 'Ratio & Proportion', teacher: 'Mr. David', status: 'not-started', dueDate: '2026-09-15' },
+  ]
+
+  const handleJoinClass = () => {
+    if (classCode === 'M3MATH26') {
+      setJoinedClass({ name: 'M3/2 Mathematics', code: classCode })
+      setShowJoinClass(false)
+      setClassCode('')
+    }
+  }
 
   return (
     <div className="max-w-[1400px] mx-auto">
@@ -44,12 +59,137 @@ const StudentDashboard = () => {
         <p className="text-base md:text-lg text-text-secondary max-w-2xl leading-relaxed">
           Continue your learning journey. You're making progress in applying mathematical concepts across different contexts.
         </p>
+        {joinedClass && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-4 p-3 bg-secondary-light border border-secondary/30 rounded-xl flex items-center gap-3"
+          >
+            <span className="material-symbols-outlined text-secondary">check_circle</span>
+            <span className="text-sm font-medium text-text-primary">Successfully joined {joinedClass.name}</span>
+          </motion.div>
+        )}
       </motion.div>
+
+      {/* Join Class Button */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        className="mb-6 md:mb-8"
+      >
+        <motion.button
+          onClick={() => setShowJoinClass(true)}
+          className="btn-outline flex items-center gap-2 text-sm md:text-base px-4 py-2"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <span className="material-symbols-outlined text-base md:text-lg">add</span>
+          Join Class
+        </motion.button>
+      </motion.div>
+
+      {/* Join Class Modal */}
+      {showJoinClass && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setShowJoinClass(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="card p-6 md:p-8 w-full max-w-md"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-6">Join a Class</h3>
+            <div className="mb-6">
+              <label className="block text-sm font-semibold text-text-primary mb-2">Class Code</label>
+              <input
+                type="text"
+                value={classCode}
+                onChange={(e) => setClassCode(e.target.value.toUpperCase())}
+                placeholder="Enter class code (e.g., M3MATH26)"
+                className="w-full px-4 py-3 rounded-xl border border-border bg-surface focus:border-primary focus:outline-none transition-colors text-sm md:text-base uppercase"
+              />
+              <p className="text-xs text-text-tertiary mt-2">Ask your teacher for the class code</p>
+            </div>
+            <div className="flex gap-3">
+              <motion.button
+                onClick={() => setShowJoinClass(false)}
+                className="btn-outline flex-1 text-sm md:text-base px-4 py-3"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Cancel
+              </motion.button>
+              <motion.button
+                onClick={handleJoinClass}
+                className="btn-primary flex-1 text-sm md:text-base px-4 py-3"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Join Class
+              </motion.button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
 
       {/* Main Layout with asymmetric grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
         {/* Left Column - Hero Section */}
         <div className="col-span-1 lg:col-span-8 flex flex-col gap-6 md:gap-8">
+          {/* Current Topics Section */}
+          {assignedTopics.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="card p-4 md:p-6"
+            >
+              <h3 className="text-lg md:text-xl font-bold text-text-primary mb-4">Current Topics</h3>
+              <div className="space-y-3">
+                {assignedTopics.map((topic) => (
+                  <motion.div
+                    key={topic.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="p-4 bg-surface-alt rounded-xl border border-border"
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h4 className="font-semibold text-text-primary mb-1">{topic.name}</h4>
+                        <p className="text-xs text-text-tertiary">Assigned by {topic.teacher}</p>
+                      </div>
+                      <span className={`px-2 py-1 rounded-lg text-xs font-semibold ${
+                        topic.status === 'not-started' 
+                          ? 'bg-tertiary-light text-tertiary' 
+                          : 'bg-secondary-light text-secondary'
+                      }`}>
+                        {topic.status === 'not-started' ? 'Not Started' : 'Completed'}
+                      </span>
+                    </div>
+                    {topic.status === 'not-started' && (
+                      <motion.button
+                        onClick={() => navigate('/dashboard/assessment/intro')}
+                        className="btn-primary text-sm px-4 py-2 mt-3"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        Start Assessment
+                      </motion.button>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
           {/* Main Focus Card with elevated design */}
           <motion.div 
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
@@ -155,63 +295,6 @@ const StudentDashboard = () => {
 
         {/* Right Column - Metrics & Recent Work */}
         <div className="col-span-1 lg:col-span-4 flex flex-col gap-6 md:gap-8">
-          {/* Mastery Score Card */}
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="card p-4 md:p-6"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-secondary/10 rounded-xl flex items-center justify-center">
-                <span className="material-symbols-outlined text-secondary text-lg md:text-xl">school</span>
-              </div>
-              <h3 className="text-base md:text-lg font-bold text-text-primary">Mastery</h3>
-            </div>
-            <div className="text-3xl md:text-5xl font-bold text-secondary mb-2" ref={masteryRef}>
-              91%
-            </div>
-            <div className="text-xs md:text-sm text-text-secondary">Excellent understanding</div>
-          </motion.div>
-
-          {/* Transfer Score Card */}
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="card p-4 md:p-6"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-error/10 rounded-xl flex items-center justify-center">
-                <span className="material-symbols-outlined text-error text-lg md:text-xl">swap_horiz</span>
-              </div>
-              <h3 className="text-base md:text-lg font-bold text-text-primary">Transfer</h3>
-            </div>
-            <div className="text-3xl md:text-5xl font-bold text-error mb-2" ref={transferRef}>
-              43%
-            </div>
-            <div className="text-xs md:text-sm text-text-secondary">Needs improvement</div>
-          </motion.div>
-
-          {/* Transfer Gap Card */}
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="card p-4 md:p-6 border-l-4 border-tertiary"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-tertiary/10 rounded-xl flex items-center justify-center">
-                <span className="material-symbols-outlined text-tertiary text-lg md:text-xl">trending_down</span>
-              </div>
-              <h3 className="text-base md:text-lg font-bold text-text-primary">Transfer Gap</h3>
-            </div>
-            <div className="text-3xl md:text-5xl font-bold text-tertiary mb-2" ref={gapRef}>
-              48%
-            </div>
-            <div className="text-xs md:text-sm text-text-secondary">Bridge this gap</div>
-          </motion.div>
-
           {/* Recent Concepts with refined table */}
           <motion.div 
             initial={{ opacity: 0, x: 30 }}

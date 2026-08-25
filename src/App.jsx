@@ -4,6 +4,13 @@ import Layout from './components/Layout'
 import LandingPage from './pages/LandingPage'
 import StudentDashboard from './pages/StudentDashboard'
 import TeacherDashboard from './pages/TeacherDashboard'
+import ClassOverview from './pages/ClassOverview'
+import StudentAnalytics from './pages/StudentAnalytics'
+import TopicAnalytics from './pages/TopicAnalytics'
+import ProductionWorkflow from './pages/ProductionWorkflow'
+import TechnologyArchitecture from './pages/TechnologyArchitecture'
+import JudgeDemo from './pages/JudgeDemo'
+import BridgeAssessmentBuilder from './pages/BridgeAssessmentBuilder'
 import AssessmentIntro from './pages/assessment/AssessmentIntro'
 import AssessmentFamiliar from './pages/assessment/AssessmentFamiliar'
 import AssessmentNearTransfer from './pages/assessment/AssessmentNearTransfer'
@@ -12,9 +19,6 @@ import AssessmentReasoning from './pages/assessment/AssessmentReasoning'
 import TransferAnalysis from './pages/TransferAnalysis'
 import ConceptExplorer from './pages/ConceptExplorer'
 import TeacherAnalytics from './pages/TeacherAnalytics'
-import BridgeAssessmentBuilder from './pages/teacher/BridgeAssessmentBuilder'
-import MyClasses from './pages/teacher/MyClasses'
-import JoinClass from './pages/student/JoinClass'
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRole }) => {
@@ -46,6 +50,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/judge-demo" element={<JudgeDemo />} />
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<RoleRedirect />} />
           
@@ -55,14 +60,6 @@ function App() {
             element={
               <ProtectedRoute allowedRole="student">
                 <StudentDashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="join-class" 
-            element={
-              <ProtectedRoute allowedRole="student">
-                <JoinClass />
               </ProtectedRoute>
             } 
           />
@@ -125,10 +122,10 @@ function App() {
             } 
           />
           <Route 
-            path="teacher-analytics" 
+            path="class-overview" 
             element={
               <ProtectedRoute allowedRole="teacher">
-                <TeacherAnalytics />
+                <ClassOverview />
               </ProtectedRoute>
             } 
           />
@@ -141,10 +138,42 @@ function App() {
             } 
           />
           <Route 
-            path="my-classes" 
+            path="student-analytics" 
             element={
               <ProtectedRoute allowedRole="teacher">
-                <MyClasses />
+                <StudentAnalytics />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="topic-analytics" 
+            element={
+              <ProtectedRoute allowedRole="teacher">
+                <TopicAnalytics />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="production-workflow" 
+            element={
+              <ProtectedRoute allowedRole="teacher">
+                <ProductionWorkflow />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="technology-architecture" 
+            element={
+              <ProtectedRoute allowedRole="teacher">
+                <TechnologyArchitecture />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="teacher-analytics" 
+            element={
+              <ProtectedRoute allowedRole="teacher">
+                <TeacherAnalytics />
               </ProtectedRoute>
             } 
           />

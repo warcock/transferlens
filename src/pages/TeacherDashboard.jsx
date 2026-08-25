@@ -1,12 +1,21 @@
 import { motion } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useCounterAnimation } from '../hooks/useAnimation'
+import { useNavigate } from 'react-router-dom'
 
 const TeacherDashboard = () => {
+  const navigate = useNavigate()
   const studentsRef = useRef(null)
   const masteryRef = useRef(null)
   const transferRef = useRef(null)
   const gapRef = useRef(null)
+  const [showCreateClass, setShowCreateClass] = useState(false)
+  const [hoveredStudent, setHoveredStudent] = useState(null)
+
+  const classes = [
+    { id: 1, name: 'M3/2 Mathematics', subject: 'Mathematics', grade: 'M3', section: '2', students: 32, topics: 4, code: 'M3MATH26' },
+    { id: 2, name: 'M3/4 Mathematics', subject: 'Mathematics', grade: 'M3', section: '4', students: 28, topics: 3, code: 'M3MATH42' },
+  ]
 
   useCounterAnimation(studentsRef, 32, { duration: 1.5 })
   useCounterAnimation(masteryRef, 86, { duration: 1.5 })
@@ -97,6 +106,149 @@ const TeacherDashboard = () => {
           </motion.button>
         </div>
       </motion.div>
+
+      {/* My Classes Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.6 }}
+        className="mb-6 md:mb-8"
+      >
+        <div className="flex justify-between items-center mb-4 md:mb-6">
+          <h2 className="text-xl md:text-2xl font-bold text-text-primary">My Classes</h2>
+          <motion.button
+            onClick={() => setShowCreateClass(true)}
+            className="btn-primary flex items-center gap-2 text-sm md:text-base px-3 md:px-4 py-2"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <span className="material-symbols-outlined text-base md:text-lg">add</span>
+            Create Class
+          </motion.button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          {classes.map((classItem, index) => (
+            <motion.div
+              key={classItem.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
+              className="card p-4 md:p-6 hover:shadow-elevated transition-shadow cursor-pointer"
+              onClick={() => navigate('/dashboard/class-overview')}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <div className="flex justify-between items-start mb-3 md:mb-4">
+                <div>
+                  <h3 className="text-base md:text-lg font-bold text-text-primary mb-1">{classItem.name}</h3>
+                  <p className="text-xs md:text-sm text-text-tertiary">{classItem.subject} • {classItem.grade}-{classItem.section}</p>
+                </div>
+                <div className="bg-primary-light px-2 py-1 rounded-lg">
+                  <span className="text-xs font-semibold text-primary">{classItem.code}</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 md:gap-6 text-xs md:text-sm text-text-secondary">
+                <div className="flex items-center gap-1 md:gap-2">
+                  <span className="material-symbols-outlined text-base md:text-lg">group</span>
+                  <span>{classItem.students} students</span>
+                </div>
+                <div className="flex items-center gap-1 md:gap-2">
+                  <span className="material-symbols-outlined text-base md:text-lg">topic</span>
+                  <span>{classItem.topics} topics</span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Create Class Modal */}
+      {showCreateClass && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setShowCreateClass(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="card p-6 md:p-8 w-full max-w-md"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-6">Create New Class</h3>
+            <div className="space-y-4 mb-6">
+              <div>
+                <label className="block text-sm font-semibold text-text-primary mb-2">Class Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g., M3/2 Mathematics"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-surface focus:border-primary focus:outline-none transition-colors text-sm md:text-base"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-text-primary mb-2">Subject</label>
+                <input
+                  type="text"
+                  placeholder="e.g., Mathematics"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-surface focus:border-primary focus:outline-none transition-colors text-sm md:text-base"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-text-primary mb-2">Grade</label>
+                  <input
+                    type="text"
+                    placeholder="M3"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-surface focus:border-primary focus:outline-none transition-colors text-sm md:text-base"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-text-primary mb-2">Section</label>
+                  <input
+                    type="text"
+                    placeholder="2"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-surface focus:border-primary focus:outline-none transition-colors text-sm md:text-base"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-text-primary mb-2">Description (Optional)</label>
+                <textarea
+                  placeholder="Class description..."
+                  rows={3}
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-surface focus:border-primary focus:outline-none transition-colors text-sm md:text-base resize-none"
+                />
+              </div>
+            </div>
+            <div className="bg-surface-alt p-4 rounded-xl mb-6">
+              <div className="text-sm font-semibold text-text-primary mb-2">Generated Class Code</div>
+              <div className="text-lg font-bold text-primary">M3MATH26</div>
+              <div className="text-xs text-text-tertiary mt-1">Share this code with students to join</div>
+            </div>
+            <div className="flex gap-3">
+              <motion.button
+                onClick={() => setShowCreateClass(false)}
+                className="btn-outline flex-1 text-sm md:text-base px-4 py-3"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Cancel
+              </motion.button>
+              <motion.button
+                onClick={() => setShowCreateClass(false)}
+                className="btn-primary flex-1 text-sm md:text-base px-4 py-3"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Create Class
+              </motion.button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
 
       {/* Metrics Row with refined design */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
@@ -250,7 +402,13 @@ const TeacherDashboard = () => {
               {students.map((student, index) => {
                 const { x, y } = getCoordinates(student.mastery, student.transfer)
                 return (
-                  <g key={student.name} className="cursor-pointer group">
+                  <g 
+                    key={student.name} 
+                    className="cursor-pointer group"
+                    onMouseEnter={() => setHoveredStudent(student)}
+                    onMouseLeave={() => setHoveredStudent(null)}
+                    onClick={() => navigate('/dashboard/student-analytics')}
+                  >
                     <motion.circle
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
@@ -261,6 +419,7 @@ const TeacherDashboard = () => {
                       fill={student.risk ? '#dc2626' : '#0f172a'}
                       r={student.risk ? 7 : 5.5}
                       filter={student.risk ? "url(#glow)" : ""}
+                      whileHover={{ scale: 1.3 }}
                     />
                     <motion.text
                       className={`opacity-0 group-hover:opacity-100 transition-opacity text-sm font-semibold fill-current ${student.risk ? 'fill-error' : 'fill-text-primary'}`}
@@ -290,6 +449,53 @@ const TeacherDashboard = () => {
                   </g>
                 )
               })}
+
+              {/* Hover Tooltip */}
+              {hoveredStudent && (
+                <motion.g
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="pointer-events-none"
+                >
+                  <rect
+                    x={getCoordinates(hoveredStudent.mastery, hoveredStudent.transfer).x - 60}
+                    y={getCoordinates(hoveredStudent.mastery, hoveredStudent.transfer).y - 70}
+                    width={120}
+                    height={55}
+                    fill="white"
+                    stroke="#e2e8f0"
+                    strokeWidth={1}
+                    rx={8}
+                    filter="url(#glow)"
+                  />
+                  <text
+                    x={getCoordinates(hoveredStudent.mastery, hoveredStudent.transfer).x}
+                    y={getCoordinates(hoveredStudent.mastery, hoveredStudent.transfer).y - 50}
+                    textAnchor="middle"
+                    className="font-bold text-sm fill-text-primary"
+                  >
+                    {hoveredStudent.name}
+                  </text>
+                  <text
+                    x={getCoordinates(hoveredStudent.mastery, hoveredStudent.transfer).x}
+                    y={getCoordinates(hoveredStudent.mastery, hoveredStudent.transfer).y - 32}
+                    textAnchor="middle"
+                    className="text-xs fill-text-secondary"
+                  >
+                    Mastery: {hoveredStudent.mastery}% | Transfer: {hoveredStudent.transfer}%
+                  </text>
+                  {hoveredStudent.gap && (
+                    <text
+                      x={getCoordinates(hoveredStudent.mastery, hoveredStudent.transfer).x}
+                      y={getCoordinates(hoveredStudent.mastery, hoveredStudent.transfer).y - 18}
+                      textAnchor="middle"
+                      className="text-xs font-bold fill-error"
+                    >
+                      Gap: {hoveredStudent.gap} pts
+                    </text>
+                  )}
+                </motion.g>
+              )}
             </svg>
           </div>
 

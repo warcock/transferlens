@@ -10,13 +10,6 @@ const AssessmentNearTransfer = () => {
     navigate('/dashboard/assessment/far-transfer')
   }
 
-  const options = [
-    { id: 'a', text: '18', letter: 'A' },
-    { id: 'b', text: '24', letter: 'B' },
-    { id: 'c', text: '27', letter: 'C' },
-    { id: 'd', text: '30', letter: 'D' }
-  ]
-
   return (
     <div className="w-full flex justify-center items-center bg-background min-h-[calc(100vh-72px)]">
       <motion.div 
@@ -78,75 +71,80 @@ const AssessmentNearTransfer = () => {
           </div>
         </motion.div>
 
-          {/* Context Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="inline-block px-3 py-1 bg-primary-light text-primary text-xs md:text-sm font-bold uppercase tracking-wider rounded-md mb-4 md:mb-6"
-          >
-            Near Transfer: Business / Staffing
-          </motion.div>
+        {/* Context Badge */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="inline-block px-3 py-1 bg-primary-light text-primary text-xs md:text-sm font-bold uppercase tracking-wider rounded-md mb-4 md:mb-6"
+        >
+          New Context: Business Scaling
+        </motion.div>
 
-          {/* Question */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mb-8 md:mb-10"
-          >
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-text-primary leading-relaxed max-w-3xl">
-              A startup has 2 engineers for every 3 sales representatives. If the company scales to 18 engineers, how many sales representatives should they hire to maintain the same ratio?
-            </h2>
-          </motion.div>
+        {/* Question */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mb-8 md:mb-10"
+        >
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-text-primary leading-relaxed max-w-3xl">
+            A startup has 2 engineers for every 3 sales representatives. If the company scales to 18 engineers, how many sales representatives should they hire to maintain the same ratio?
+          </h2>
+        </motion.div>
 
-          {/* Answer Options */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-10">
-            {options.map((option, index) => (
-              <motion.button
-                key={option.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + index * 0.1 }}
-                onClick={() => setSelectedAnswer(option.id)}
-                whileHover={{ y: -4, scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                className={`group relative p-4 md:p-6 rounded-2xl border-2 text-left transition-all ${
-                  selectedAnswer === option.id
-                    ? 'border-primary bg-primary-light shadow-elevated'
-                    : 'border-border hover:border-primary/50 hover:bg-surface-alt'
-                }`}
-              >
-                <div className="flex items-center gap-3 md:gap-4">
-                  <motion.div 
-                    className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center font-bold text-base md:text-lg ${
-                      selectedAnswer === option.id 
-                        ? 'bg-primary text-text-inverse' 
-                        : 'bg-surface-alt text-text-tertiary group-hover:bg-primary-light group-hover:text-primary'
-                    }`}
-                    animate={selectedAnswer === option.id ? { scale: [1, 1.1, 1] } : {}}
-                    transition={{ duration: 0.3 }}
+        {/* Answer Options */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-10">
+          {[
+            { id: 'a', text: '24 sales representatives', letter: 'A' },
+            { id: 'b', text: '27 sales representatives', letter: 'B' },
+            { id: 'c', text: '21 sales representatives', letter: 'C' },
+            { id: 'd', text: '30 sales representatives', letter: 'D' }
+          ].map((option, index) => (
+            <motion.button
+              key={option.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + index * 0.1 }}
+              onClick={() => setSelectedAnswer(option.id)}
+              whileHover={{ y: -4, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              className={`group relative p-4 md:p-6 rounded-2xl border-2 text-left transition-all ${
+                selectedAnswer === option.id
+                  ? 'border-primary bg-primary-light shadow-elevated'
+                  : 'border-border hover:border-primary/50 hover:bg-surface-alt'
+              }`}
+            >
+              <div className="flex items-center gap-3 md:gap-4">
+                <motion.div 
+                  className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center font-bold text-base md:text-lg ${
+                    selectedAnswer === option.id 
+                      ? 'bg-primary text-text-inverse' 
+                      : 'bg-surface-alt text-text-tertiary group-hover:bg-primary-light group-hover:text-primary'
+                  }`}
+                  animate={selectedAnswer === option.id ? { scale: [1, 1.1, 1] } : {}}
+                  transition={{ duration: 0.3 }}
+                >
+                  {option.letter}
+                </motion.div>
+                <span className={`text-base md:text-lg font-medium ${selectedAnswer === option.id ? 'text-primary' : 'text-text-primary'}`}>
+                  {option.text}
+                </span>
+              </div>
+              <AnimatePresence>
+                {selectedAnswer === option.id && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    className="absolute top-4 right-4"
                   >
-                    {option.letter}
+                    <span className="material-symbols-outlined text-primary text-2xl">check_circle</span>
                   </motion.div>
-                  <span className={`text-base md:text-lg font-medium ${selectedAnswer === option.id ? 'text-primary' : 'text-text-primary'}`}>
-                    {option.text}
-                  </span>
-                </div>
-                <AnimatePresence>
-                  {selectedAnswer === option.id && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="absolute top-4 right-4"
-                    >
-                      <span className="material-symbols-outlined text-primary text-2xl">check_circle</span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.button>
-            ))}
+                )}
+              </AnimatePresence>
+            </motion.button>
+          ))}
         </div>
 
         {/* Navigation */}

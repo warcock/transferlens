@@ -107,7 +107,46 @@ const TeacherAnalytics = () => {
         </motion.div>
       </div>
 
-      {/* Student Performance Table with enhanced design */}
+      {/* AI-Assisted Diagnostic Insights */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 0.6 }}
+        className="card p-6 md:p-8 bg-gradient-to-r from-primary-light to-surface-alt border border-primary/20 mb-6 md:mb-8"
+      >
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+            <span className="material-symbols-outlined text-primary text-xl">auto_awesome</span>
+          </div>
+          <div>
+            <h3 className="text-xl md:text-2xl font-bold text-text-primary">AI-Assisted Diagnostic Insights</h3>
+            <div className="flex items-center gap-2 text-xs text-text-tertiary mt-1">
+              <span className="material-symbols-outlined text-sm">info</span>
+              <span>Prototype data - Not for clinical use</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <div className="bg-white/50 p-4 md:p-6 rounded-xl border border-border">
+            <div className="font-bold text-error mb-2">Primary Transfer Barrier: Context Recognition</div>
+            <p className="text-sm text-text-secondary mb-3">
+              Class-wide analysis shows that students perform well on familiar problems but struggle to recognize the same underlying concept in unfamiliar contexts.
+            </p>
+            <div className="text-xs text-text-tertiary">Affects 67% of students</div>
+          </div>
+
+          <div className="bg-white/50 p-4 md:p-6 rounded-xl border border-border">
+            <div className="font-bold text-primary mb-2">Suggested Intervention</div>
+            <p className="text-sm text-text-secondary mb-3">
+              Implement cross-context practice sessions. Present the same mathematical concept in varied real-world scenarios before introducing procedural methods.
+            </p>
+            <div className="text-xs text-text-tertiary">Estimated impact: +15% transfer score</div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Student Performance Table and Concept Performance */}
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

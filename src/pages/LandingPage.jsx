@@ -1,12 +1,99 @@
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useUserRole } from '../contexts/UserRoleContext'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const LandingPage = () => {
   const navigate = useNavigate()
   const { setRole } = useUserRole()
   const [hoveredRole, setHoveredRole] = useState(null)
+  const heroRef = useRef(null)
+  const problemRef = useRef(null)
+  const solutionRef = useRef(null)
+  const roleRef = useRef(null)
+  const lenisRef = useRef(null)
+
+  // Get Lenis instance from window (initialized in Layout)
+  useEffect(() => {
+    // @ts-ignore
+    lenisRef.current = window.lenis
+  }, [])
+
+  const smoothScrollTo = (id) => {
+    const element = document.getElementById(id)
+    if (element && lenisRef.current) {
+      lenisRef.current.scrollTo(element)
+    } else if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  useEffect(() => {
+    // Hero section entrance animation
+    gsap.fromTo(heroRef.current,
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+    )
+
+    // Problem section scroll animation
+    gsap.fromTo(problemRef.current,
+      { opacity: 0, y: 100 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: problemRef.current,
+          start: 'top 80%',
+          end: 'top 20%',
+          scrub: 1
+        }
+      }
+    )
+
+    // Solution section scroll animation
+    gsap.fromTo(solutionRef.current,
+      { opacity: 0, y: 100 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: solutionRef.current,
+          start: 'top 80%',
+          end: 'top 20%',
+          scrub: 1
+        }
+      }
+    )
+
+    // Role selection section scroll animation
+    gsap.fromTo(roleRef.current,
+      { opacity: 0, scale: 0.9 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: roleRef.current,
+          start: 'top 80%',
+          end: 'top 20%',
+          scrub: 1
+        }
+      }
+    )
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    }
+  }, [])
 
   const handleRoleSelect = (role) => {
     setRole(role)
@@ -35,7 +122,7 @@ const LandingPage = () => {
           
           <div className="flex items-center gap-4 md:gap-6">
             <motion.button 
-              onClick={() => document.getElementById('problem-section').scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => smoothScrollTo('problem-section')}
               className="text-text-secondary hover:text-text-primary font-medium transition-colors text-sm md:text-base hidden md:block"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -43,7 +130,7 @@ const LandingPage = () => {
               About
             </motion.button>
             <motion.button 
-              onClick={() => document.getElementById('solution-section').scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => smoothScrollTo('solution-section')}
               className="text-text-secondary hover:text-text-primary font-medium transition-colors text-sm md:text-base hidden md:block"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -51,7 +138,7 @@ const LandingPage = () => {
               Research
             </motion.button>
             <motion.button 
-              onClick={() => document.getElementById('role-selection').scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => smoothScrollTo('role-selection')}
               className="btn-primary text-sm md:text-base px-4 md:px-6 py-2 md:py-3"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -63,7 +150,7 @@ const LandingPage = () => {
       </motion.nav>
 
       {/* Hero Section - Asymmetric composition */}
-      <section className="min-h-screen flex items-center pt-20 relative">
+      <section ref={heroRef} className="min-h-screen flex items-center pt-20 relative">
         {/* Background elements */}
         <motion.div 
           className="absolute top-20 right-20 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-primary/5 rounded-full blur-3xl"
@@ -122,7 +209,7 @@ const LandingPage = () => {
 
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-8 md:mb-12">
                 <motion.button 
-                  onClick={() => document.getElementById('role-selection').scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => smoothScrollTo('role-selection')}
                   className="btn-primary text-base md:text-lg px-6 md:px-8 py-3 md:py-4 w-full sm:w-auto"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -130,12 +217,12 @@ const LandingPage = () => {
                   Start Learning
                 </motion.button>
                 <motion.button 
-                  onClick={() => document.getElementById('solution-section').scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => smoothScrollTo('role-selection')}
                   className="btn-outline text-base md:text-lg px-6 md:px-8 py-3 md:py-4 w-full sm:w-auto"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  View Demo
+                  See How It Works
                 </motion.button>
               </div>
 
@@ -246,7 +333,7 @@ const LandingPage = () => {
       </section>
 
       {/* Problem Section - Unique layout */}
-      <section id="problem-section" className="py-16 md:py-24 bg-surface">
+      <section id="problem-section" ref={problemRef} className="py-16 md:py-24 bg-surface">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8">
           <motion.div 
             className="text-center mb-12 md:mb-16"
@@ -310,7 +397,7 @@ const LandingPage = () => {
       </section>
 
       {/* Solution Section - Asymmetric */}
-      <section id="solution-section" className="py-16 md:py-24 bg-background">
+      <section id="solution-section" ref={solutionRef} className="py-16 md:py-24 bg-background">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-center">
             <motion.div 
@@ -401,7 +488,7 @@ const LandingPage = () => {
       </section>
 
       {/* Role Selection CTA */}
-      <section id="role-selection" className="py-16 md:py-24 bg-surface">
+      <section id="role-selection" ref={roleRef} className="py-16 md:py-24 bg-surface">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8">
           <motion.div 
             className="text-center mb-12 md:mb-16"
@@ -488,14 +575,14 @@ const LandingPage = () => {
             </div>
             
             <div className="flex items-center gap-4 md:gap-8 text-sm text-text-secondary flex-wrap justify-center">
-              <button onClick={() => document.getElementById('problem-section').scrollIntoView({ behavior: 'smooth' })} className="hover:text-text-primary transition-colors">About</button>
-              <button onClick={() => document.getElementById('solution-section').scrollIntoView({ behavior: 'smooth' })} className="hover:text-text-primary transition-colors">Research</button>
+              <button onClick={() => smoothScrollTo('problem-section')} className="hover:text-text-primary transition-colors">About</button>
+              <button onClick={() => smoothScrollTo('solution-section')} className="hover:text-text-primary transition-colors">Research</button>
               <button className="hover:text-text-primary transition-colors">Contact</button>
               <button className="hover:text-text-primary transition-colors">Privacy</button>
             </div>
 
             <div className="text-sm text-text-tertiary">
-              © 2024 TransferLens. Measuring real learning.
+              TransferLens | ToNs
             </div>
           </div>
         </div>

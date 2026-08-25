@@ -21,7 +21,7 @@ const Sidebar = () => {
 
   const studentNavItems = [
     { path: '/dashboard/student-dashboard', icon: 'dashboard', label: 'Dashboard' },
-    { path: '/dashboard/assessment/familiar', icon: 'assignment', label: 'Take Assessment' },
+    { path: '/dashboard/assessment/intro', icon: 'assignment', label: 'Take Assessment' },
     { path: '/dashboard/transfer-analysis', icon: 'analytics', label: 'Transfer Analysis' },
     { path: '/dashboard/concept-explorer', icon: 'account_tree', label: 'Concept Explorer' },
   ]
